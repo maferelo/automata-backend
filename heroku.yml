@@ -1,0 +1,20 @@
+---
+setup:
+  config:
+    env_file: .env
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+build:
+  docker:
+    web: Dockerfile
+release:
+  command: ["/prestart.sh"]
+  image: web
+run:
+  web:
+    - |
+      gunicorn app.main:app
+        -k uvicorn.workers.UvicornWorker
+        --worker-tmp-dir /dev/shm
+        -b 0.0.0.0:${PORT:-5000}

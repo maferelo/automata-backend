@@ -1,0 +1,64 @@
+---
+x-app: &default-app
+  build:
+    context: .
+    target: app
+  depends_on:
+    postgres:
+      condition: service_healthy
+  env_file:
+    - .env
+  init: true
+  restart: ${DOCKER_RESTART_POLICY:-unless-stopped}
+  stop_grace_period: 3s
+  tty: true
+
+services:
+  pgadmin:
+    environment:
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@app.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+    image: ${PGADMIN_IMAGE:-dpage/pgadmin4}
+    init: true
+    ports:
+      - 5050:5050
+    restart: ${DOCKER_RESTART_POLICY:-unless-stopped}
+    stop_grace_period: 3s
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+  postgres:
+    env_file:
+      - .env
+    healthcheck:
+      interval: 10s
+      retries: 5
+      test: ["CMD-SHELL", "pg_isready"]
+      timeout: 5s
+    image: ${DB_IMAGE:-postgres:14.4-bullseye}
+    init: true
+    ports:
+      - 5432:5432
+    restart: ${DOCKER_RESTART_POLICY:-unless-stopped}
+    stop_grace_period: 3s
+
+  app:
+    <<: *default-app
+    build:
+      args:
+        IMAGE: ${APP_IMAGE:-tiangolo/uvicorn-gunicorn-fastapi:python3.8}
+    ports:
+      - 8000:8000
+    healthcheck:
+      interval: 10s
+      retries: 3
+      start_period: 10s
+      test: curl --fail http://localhost:8000 || exit 1
+      timeout: 10s
+    volumes:
+      - .:/app
+
+volumes:
+  pgadmin:
+  postgres:

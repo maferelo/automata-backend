@@ -1,0 +1,19 @@
+---
+services:
+  app:
+    build:
+      args:
+        VARIANT: ${DEV_IMAGE_VARIANT:-3.8-bullseye}
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    environment:
+      DOCKER_BUILDKIT: 1
+      COMPOSE_DOCKER_CLI_BUILD: 1
+    volumes:
+      - ~/.gitconfig:/home/vscode/.gitconfig:cache
+      - home-cache:/home/vscode/.cache:cache
+      - vscode-extensions-cache:/home/vscode/.vscode-server/extensions:cache
+
+volumes:
+  home-cache:
+  vscode-extensions-cache:

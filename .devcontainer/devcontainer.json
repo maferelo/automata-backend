@@ -1,0 +1,71 @@
+{
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "2gua.rainbow-brackets",
+        "almenon.arepl",
+        "anseki.vscode-color",
+        "benjaminbenais.copilot-theme",
+        "christian-kohler.path-intellisense",
+        "DavidAnson.vscode-markdownlint",
+        "dongli.python-preview",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "GitHub.copilot",
+        "KevinRose.vsc-python-indent",
+        "LittleFoxTeam.vscode-python-test-adapter",
+        "matangover.mypy",
+        "markis.code-coverage",
+        "mikestead.dotenv",
+        "ms-azuretools.vscode-docker",
+        "ms-python.black-formatter",
+        "ms-python.flake8",
+        "ms-python.pylint",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.jupyter-renderers",
+        "ms-toolsai.jupyter",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-ssh-edit",
+        "ms-vscode-remote.remote-ssh",
+        "naumovs.color-highlight",
+        "njqdev.vscode-python-typehint",
+        "oderwat.indent-rainbow",
+        "redhat.vscode-yaml",
+        "richie5um2.vscode-sort-json",
+        "sourcery.sourcery",
+        "Tyriar.sort-lines"
+      ],
+      "settings": {
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": true
+        },
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+        "editor.rulers": [88],
+        "python.analysis.diagnosticSeverityOverrides": {
+          "reportGeneralTypeIssues": "none"
+        },
+        "python.analysis.typeCheckingMode": "basic",
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.ignorePatterns": ["/migrations/**", "/notes/**"],
+        "python.linting.pylintArgs": ["--disable=missing-docstring"],
+        "python.linting.pylintEnabled": true,
+        "workbench.colorCustomizations": {
+          "titleBar.activeBackground": "#FFFDD0",
+          "titleBar.activeForeground": "#000000"
+        },
+        "window.title": "${localWorkspaceFolderBasename}",
+        "yaml.format.enable": true
+      }
+    }
+  },
+  "dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
+  "postCreateCommand": "./.devcontainer/postcreate.sh",
+  "remoteUser": "vscode",
+  "service": "app",
+  "waitFor": "postCreateCommand",
+  "workspaceFolder": "/app"
+}
