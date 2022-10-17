@@ -76,7 +76,13 @@ repos:
     hooks:
       - id: isort
         name: isort (python)
-        args: ["--profile", "black", "--filter-files"]
+        args:
+          [
+            "--filter-files",
+            "--force-single-line-imports",
+            "--profile",
+            "black",
+          ]
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.8.0.4
     hooks:
