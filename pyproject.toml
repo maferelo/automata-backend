@@ -32,6 +32,8 @@ black = "^22.10.0"
 pre-commit = "^2.20.0"
 coverage = {extras = ["toml"], version = "^6.5.0"}
 pytest-cov = "^4.0.0"
+nox = "^2022.8.7"
+pytest-mock = "^3.10.0"
 
 [tool.poetry.scripts]
 app = "src.app.console:main"
@@ -48,7 +50,7 @@ fail_under = 100
 show_missing = true
 
 [tool.mypy]
-exclude = ["apps", "notes", "migrations"]
+exclude = [".env", "apps", "notes", "migrations"]
 ignore_missing_imports = "True"
 
 [tool.pylint]
