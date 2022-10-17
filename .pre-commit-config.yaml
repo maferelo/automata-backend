@@ -71,10 +71,12 @@ repos:
         entry: prettier --write --list-different
         types: [javascript]
         exclude: ^search/templates/
-  - repo: https://github.com/asottile/reorder_python_imports
-    rev: v3.8.2
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
     hooks:
-      - id: reorder-python-imports
+      - id: isort
+        name: isort (python)
+        args: ["--profile", "black", "--filter-files"]
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.8.0.4
     hooks:
