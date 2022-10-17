@@ -8,7 +8,6 @@
         "benjaminbenais.copilot-theme",
         "christian-kohler.path-intellisense",
         "DavidAnson.vscode-markdownlint",
-        "dongli.python-preview",
         "eamodio.gitlens",
         "esbenp.prettier-vscode",
         "GitHub.copilot",
@@ -51,6 +50,8 @@
         "python.formatting.provider": "black",
         "python.linting.enabled": true,
         "python.linting.ignorePatterns": ["/migrations/**", "/notes/**"],
+        "python.pythonPath": "/app/.venv/bin/python",
+        "python.linting.pylintPath": "/app/.venv/bin/pylint",
         "python.linting.pylintEnabled": true,
         "workbench.colorCustomizations": {
           "titleBar.activeBackground": "#FFFDD0",

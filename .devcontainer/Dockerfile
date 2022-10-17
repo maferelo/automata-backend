@@ -32,9 +32,10 @@ RUN \
 
 # Trigger build if files change
 COPY \
-        poetry.lock \
-        pyproject.toml \
         .pre-commit-config.yaml \
+        poetry.lock \
+        poetry.toml \
+        pyproject.toml \
         ./
 
 COPY migrations .

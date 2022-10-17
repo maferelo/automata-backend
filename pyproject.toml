@@ -20,6 +20,7 @@ scikit-learn = "0.24.2"
 ipykernel = "^6.15.3"
 pandas = "1.3"
 typer = "^0.6.1"
+click = "^8.1.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
@@ -29,10 +30,15 @@ pre-commit = "^2.20.0"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^2.15.3"
+mypy = "^0.982"
 
 [tool.pylint]
 max-line-length = 120
 disable = ["C0114"]
+ignore = ["notes", "migrations"]
+
+[tool.mypy]
+exclude = ["notes", "migrations"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
