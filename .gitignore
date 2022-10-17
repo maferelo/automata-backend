@@ -2,10 +2,10 @@ __pycache__/
 .coverage
 .DS_Store
 .env
-.mypy_cache
-.nox
-.pytest_cache
-.venv
+.mypy_cache/
+.nox/
+.pytest_cache/
+.venv/
 .vscode/
 *.csv
 docker-compose.override.yml
