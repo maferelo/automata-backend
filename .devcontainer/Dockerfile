@@ -7,6 +7,8 @@ ENV \
         PYTHONDONTWRITEBYTECODE=1 \
         PYTHONUNBUFFERED=1
 
+RUN apt-get install -y python3-dev --no-install-recommends
+
 # Allow piped commands to fail at any step and run logging mode
 SHELL ["/bin/bash", "-ceux", "-o", "pipefail"]
 
@@ -28,7 +30,14 @@ RUN \
 RUN \
         --mount=type=cache,target=/home/vscode/.cache,uid=1000 \
         curl https://cli-assets.heroku.com/install.sh | sh; \
-        curl -sSL https://install.python-poetry.org | python -
+        curl https://pyenv.run | bash; \
+        curl -sSL https://install.python-poetry.org | python -; \
+        echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc
+
+RUN \
+        --mount=type=cache,target=/home/vscode/.cache,uid=1000 \
+        export PATH="$HOME/.pyenv/bin:$PATH"; \
+        pyenv install 3.9.15
 
 # Trigger build if files change
 COPY \
