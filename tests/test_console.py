@@ -1,5 +1,6 @@
 import click.testing
 import pytest
+
 from app import console
 
 
