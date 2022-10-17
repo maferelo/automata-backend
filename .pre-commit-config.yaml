@@ -17,7 +17,7 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: mixed-line-ending
-      - {id: no-commit-to-branch, args: [--branch, master]}
+      - { id: no-commit-to-branch, args: [--branch, master] }
       - id: trailing-whitespace
   - repo: https://github.com/psf/black
     rev: 22.8.0
@@ -84,3 +84,5 @@ repos:
     rev: v1.27.1
     hooks:
       - id: yamllint
+        args:
+          ["-d {extends: default, rules: {braces: {max-spaces-inside: -1}}}"]

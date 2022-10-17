@@ -14,8 +14,8 @@ cd automata
 
 ### For Mac
 
-* [Docker](https://www.docker.com/)
-* [Homebrew](https://brew.sh/)
+- [Docker](https://www.docker.com/)
+- [Homebrew](https://brew.sh/)
 
 ```bash
 bash scripts/prestart-mac.sh
@@ -23,10 +23,10 @@ bash scripts/prestart-mac.sh
 
 ### For RaspberryPi
 
-* [Docker](https://www.docker.com/)
-* [ex-fuse](https://packages.debian.org/source/buster/fuse-exfat)
-* [Pyenv](https://github.com/pyenv/pyenv)
-* [Python3.8.13](https://www.python.org/)
+- [Docker](https://www.docker.com/)
+- [ex-fuse](https://packages.debian.org/source/buster/fuse-exfat)
+- [Pyenv](https://github.com/pyenv/pyenv)
+- [Python3.8.13](https://www.python.org/)
 
 ```bash
 ssh pi@192.168.1.3
@@ -99,13 +99,13 @@ heroku logs --tail
 
 ### Features
 
-* reset_jobs: Set the scripts to run consecutive by day of month.
+- reset_jobs: Set the scripts to run consecutive by day of month.
 
 ### Scripts
 
-* update: Update the rpi
-* cleanup: Clean after reboot from update
-* backup: Clone rpi to hdd
+- update: Update the rpi
+- cleanup: Clean after reboot from update
+- backup: Clone rpi to hdd
 
 ### Runnning the app
 
@@ -115,13 +115,13 @@ sudo bash scripts/prestart-rpi.sh
 
 ## References
 
-* [Project homepage](https://your.github.com/automata/)
-* [Repository](https://github.com/maferelo/automata/)
-* [Issue tracker](https://github.com/your/maferelo/issues)
-  * In case of sensitive bugs like security vulnerabilities, please contact
+- [Project homepage](https://your.github.com/automata/)
+- [Repository](https://github.com/maferelo/automata/)
+- [Issue tracker](https://github.com/your/maferelo/issues)
+  - In case of sensitive bugs like security vulnerabilities, please contact
     maferelo13@gmail.com directly instead of using issue tracker. We value your effort
     to improve the security and privacy of this project!
-* Related projects
-  * Your other project
-  * Someone else's project
-  * [Awesome README](https://github.com/matiassingers/awesome*readme)
+- Related projects
+  - Your other project
+  - Someone else's project
+  - [Awesome README](https://github.com/matiassingers/awesome*readme)
