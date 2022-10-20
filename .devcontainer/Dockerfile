@@ -7,8 +7,6 @@ ENV \
         PYTHONDONTWRITEBYTECODE=1 \
         PYTHONUNBUFFERED=1
 
-RUN apt-get install -y python3-dev --no-install-recommends
-
 # Allow piped commands to fail at any step and run logging mode
 SHELL ["/bin/bash", "-ceux", "-o", "pipefail"]
 
@@ -25,7 +23,8 @@ USER vscode
 RUN \
         mkdir -p \
         /home/vscode/.vscode-server/extensions \
-        && chown -R vscode:vscode /home/vscode
+        /home/vscode/.cache/pre-commit; \
+        chown -R vscode:vscode /home/vscode
 
 RUN \
         --mount=type=cache,target=/home/vscode/.cache,uid=1000 \
