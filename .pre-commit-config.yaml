@@ -94,3 +94,12 @@ repos:
       - id: yamllint
         args:
           ["-d {extends: default, rules: {braces: {max-spaces-inside: -1}}}"]
+  - repo: local
+    hooks:
+      - id: test
+        name: test
+        entry: poetry run nox
+        args: ["-r"]
+        language: system
+        types: [python]
+        pass_filenames: false
