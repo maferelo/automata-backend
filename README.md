@@ -44,7 +44,7 @@ We use [remote containers](https://code.visualstudio.com/docs/remote/containers-
 Inside the container run:
 
 ```bash
-uvicorn app.main:app --host 0.0.0.0 --reload
+poetry run app
 ```
 
 Check the endpoint
@@ -76,6 +76,12 @@ Change models and commit
 ```bash
 alembic revision --autogenerate -m "<message>"
 alembic upgrade head
+```
+
+### Tests
+
+```bash
+nox -r -- tests/test_console.py
 ```
 
 ### Rpi
