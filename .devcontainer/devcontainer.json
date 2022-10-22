@@ -55,8 +55,8 @@
         "python.linting.pylintEnabled": true,
         "python.sortImports.args": ["--force-single-line-imports"],
         "workbench.colorCustomizations": {
-          "titleBar.activeBackground": "#FFFDD0",
-          "titleBar.activeForeground": "#000000"
+          "titleBar.activeBackground": "#FF00FF",
+          "titleBar.activeForeground": "#ffffff"
         },
         "window.title": "${localWorkspaceFolderBasename}",
         "yaml.format.enable": true
