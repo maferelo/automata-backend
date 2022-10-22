@@ -15,6 +15,12 @@ WORKDIR /app
 COPY .devcontainer/postcreate.sh .devcontainer/
 
 RUN \
+        apt-get update; \
+        apt-get install -y --no-install-recommends python3-dev; \
+        apt-get clean; \
+        rm -rf /var/lib/apt/lists/*
+
+RUN \
         chmod +x .devcontainer/postcreate.sh; \
         chown -R vscode:vscode .devcontainer
 
