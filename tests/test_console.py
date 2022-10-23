@@ -1,18 +1,6 @@
-import click.testing
-import pytest
 import requests
 
 from app import console
-
-
-@pytest.fixture
-def mock_wikipedia_random_page(mocker):
-    return mocker.patch("app.wikipedia.random_page")
-
-
-@pytest.fixture
-def runner():
-    return click.testing.CliRunner()
 
 
 def test_main_fails_on_request_error(runner, mock_requests_get):

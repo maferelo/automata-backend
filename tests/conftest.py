@@ -1,3 +1,4 @@
+import click.testing
 import pytest
 
 
@@ -9,3 +10,13 @@ def mock_requests_get(mocker):
         "extract": "Lorem ipsum dolor sit amet",
     }
     return mock
+
+
+@pytest.fixture
+def runner():
+    return click.testing.CliRunner()
+
+
+@pytest.fixture
+def mock_wikipedia_random_page(mocker):
+    return mocker.patch("app.wikipedia.random_page")
