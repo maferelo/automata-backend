@@ -84,6 +84,12 @@ alembic upgrade head
 nox -r -- tests/test_console.py
 ```
 
+End to end testing
+
+```bash
+nox -rs tests-3.8 -- -m e2e
+```
+
 ### Rpi
 
 ```bash
