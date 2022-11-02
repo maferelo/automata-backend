@@ -12,8 +12,8 @@ services:
     volumes:
       - ~/.gitconfig:/home/vscode/.gitconfig:cache
       - home-cache:/home/vscode/.cache:cache
-      - vscode-extensions-cache:/home/vscode/.vscode-server/extensions:cache
+      - extensions-cache:/home/vscode/.vscode-server/extensions:cache
 
 volumes:
   home-cache:
-  vscode-extensions-cache:
+  extensions-cache:

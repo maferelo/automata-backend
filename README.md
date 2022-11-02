@@ -90,7 +90,7 @@ End to end testing
 nox -rs tests-3.8 -- -m e2e
 ```
 
-### Rpi
+## Raspberry
 
 ```bash
 docker compose -f docker-compose.rpi.yml up
