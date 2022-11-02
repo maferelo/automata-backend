@@ -19,10 +19,6 @@ repos:
       - id: mixed-line-ending
       - { id: no-commit-to-branch, args: [--branch, master] }
       - id: trailing-whitespace
-  - repo: https://github.com/psf/black
-    rev: 22.8.0
-    hooks:
-      - id: black
   - repo: https://github.com/asottile/blacken-docs
     rev: v1.12.1
     hooks:
@@ -96,6 +92,16 @@ repos:
           ["-d {extends: default, rules: {braces: {max-spaces-inside: -1}}}"]
   - repo: local
     hooks:
+      - id: black
+        name: black
+        entry: poetry run black
+        language: system
+        types: [python]
+      - id: flake8
+        name: flake8
+        entry: poetry run flake8
+        language: system
+        types: [python]
       - id: test
         name: test
         entry: poetry run nox
