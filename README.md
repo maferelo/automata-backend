@@ -81,13 +81,13 @@ alembic upgrade head
 ### Tests
 
 ```bash
-nox -r -- tests/test_console.py
+nox --session tests -- tests/test_console.py
 ```
 
 End to end testing
 
 ```bash
-nox -rs tests-3.8 -- -m e2e
+nox -s tests -- -m e2e
 ```
 
 ## Raspberry

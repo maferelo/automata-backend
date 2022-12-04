@@ -1,6 +1,9 @@
-**/.git
+__pycache__/
+.coverage**
+.nox/
 .venv
 .vscode/
-__pycache__/
+**/.git
+dist/
 docker-compose.override.yml
 notes/

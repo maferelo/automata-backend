@@ -7,12 +7,13 @@ services:
       dockerfile: .devcontainer/Dockerfile
     command: sleep infinity
     environment:
-      DOCKER_BUILDKIT: 1
       COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
     volumes:
-      - ~/.gitconfig:/home/vscode/.gitconfig:cache
-      - home-cache:/home/vscode/.cache:cache
+      - ~/.bash_history:/home/vscode/.bash_history:cache
+      - ~/.gitconfig:/home/vscode/.gitconfig
       - extensions-cache:/home/vscode/.vscode-server/extensions:cache
+      - home-cache:/home/vscode/.cache:cache
 
 volumes:
   home-cache:

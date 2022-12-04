@@ -10,4 +10,4 @@ git init .
 
 poetry run pre-commit install --install-hooks
 
-poetry run pre-commit run -a
+#poetry run pre-commit run -a

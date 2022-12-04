@@ -54,7 +54,6 @@
         "python.pythonPath": "/app/.venv/bin/python",
         "python.linting.pylintPath": "/app/.venv/bin/pylint",
         "python.linting.pylintEnabled": true,
-        "python.sortImports.args": ["--force-single-line-imports"],
         "workbench.colorCustomizations": {
           "titleBar.activeBackground": "#FF00FF",
           "titleBar.activeForeground": "#ffffff"

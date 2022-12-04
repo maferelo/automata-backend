@@ -8,5 +8,5 @@ __pycache__/
 .venv/
 .vscode/
 *.csv
-docker-compose.override.yml
 dist/
+docker-compose.override.yml
