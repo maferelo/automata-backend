@@ -1,4 +1,4 @@
-ARG VARIANT=3.7.13-bullseye
+ARG VARIANT=3.8-bullseye
 
 FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 

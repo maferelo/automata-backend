@@ -3,7 +3,7 @@ services:
   app:
     build:
       args:
-        VARIANT: ${DEV_IMAGE_VARIANT:-3.7.13-bullseye}
+        VARIANT: ${DEV_IMAGE_VARIANT:-3.8-bullseye}
       dockerfile: .devcontainer/Dockerfile
     command: sleep infinity
     environment:
