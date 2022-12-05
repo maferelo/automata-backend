@@ -44,6 +44,7 @@
         "editor.formatOnSave": true,
         "editor.formatOnSaveMode": "file",
         "editor.rulers": [88],
+        "markdownlint.ignore": ["LICENSE"],
         "python.analysis.diagnosticSeverityOverrides": {
           "reportGeneralTypeIssues": "none"
         },
