@@ -7,9 +7,8 @@ from nox_poetry import session as _session
 
 PYTHON_VERSION = "3.8"
 
-LOCATIONS = ["src", "tests"]
+LOCATIONS = ["src", "tests", "noxfile.py", "docs/conf.py"]
 nox.options.sessions = (
-    "safety",
     "tests",
     "typeguard",
 )
@@ -26,6 +25,12 @@ def coverage(session: Session) -> None:
         session.run("coverage", "combine")
 
     session.run("coverage", *args)
+
+
+@nox.session(python=False)
+def docs(session: Session) -> None:
+    """Build the documentation."""
+    session.run("sphinx-build", "docs", "docs/_build")
 
 
 @_session(python=PYTHON_VERSION, reuse_venv=True)

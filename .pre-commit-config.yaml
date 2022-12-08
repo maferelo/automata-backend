@@ -1,5 +1,5 @@
 ---
-exclude: ^(migrations/|notes/|apps/|.venv/)
+exclude: ^(apps/|docs/_build/|migrations/|notes/|.venv/)
 repos:
   - hooks:
       - args:
@@ -37,7 +37,7 @@ repos:
     rev: v2.10.0
   - hooks:
       - entry: prettier --write --list-different
-        exclude: ^search/templates/
+        exclude: ^(search/templates/)
         id: prettier
         types:
           - javascript
