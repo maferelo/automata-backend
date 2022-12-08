@@ -64,7 +64,7 @@ pre-commit run --all-files
 Use the package manager [poetry](https://python-poetry.org/) to install requirements
 
 ```bash
-poetry add <package> --group dev
+poetry add darglint --group dev
 ```
 
 ### Database migrations

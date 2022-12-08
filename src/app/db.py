@@ -1,20 +1,27 @@
+"""Database module.""" ""
 import databases
 import ormar
 import sqlalchemy
 
-from ...apps.app2.config import settings
+from .config import settings
 
 database = databases.Database(settings.db_url)
 metadata = sqlalchemy.MetaData()
 
 
 class BaseMeta(ormar.ModelMeta):
+    """Base metadata for all models."""
+
     metadata = metadata
     database = database
 
 
 class User(ormar.Model):
+    """User model."""
+
     class Meta(BaseMeta):
+        """Meta class.""" ""
+
         tablename = "users"
 
     id: int = ormar.Integer(primary_key=True)
@@ -23,7 +30,11 @@ class User(ormar.Model):
 
 
 class Readers(ormar.Model):
+    """Readers model."""
+
     class Meta(BaseMeta):
+        """Meta class."""
+
         tablename = "readers"
 
     id: int = ormar.Integer(primary_key=True)
@@ -33,7 +44,11 @@ class Readers(ormar.Model):
 
 
 class Books(ormar.Model):
+    """Books model."""
+
     class Meta(BaseMeta):
+        """Meta class."""
+
         tablename = "books"
 
     id: int = ormar.Integer(primary_key=True)
@@ -42,7 +57,11 @@ class Books(ormar.Model):
 
 
 class BooksReaders(ormar.Model):
+    """BooksReaders model."""
+
     class Meta(BaseMeta):
+        """Meta class."""
+
         tablename = "books_readers"
         constraints = [ormar.UniqueColumns("book", "reader")]
 
