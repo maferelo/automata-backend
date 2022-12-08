@@ -2,6 +2,7 @@
 name = "app"
 version = "0.1.0"
 description = "Utilities using best practices with notes and examples"
+documentation = "https://automata-backend.readthedocs.io"
 authors = ["Felipe Restrepo <maferelo@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]

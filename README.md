@@ -1,5 +1,7 @@
 # Automata
 
+[![Documentation Status](https://readthedocs.org/projects/automata-backend/badge/?version=latest)](https://automata-backend.readthedocs.io/en/latest/?badge=latest)
+
 > Personal scripts for automation of everyday tasks
 > using best practices with reference notes.
 
