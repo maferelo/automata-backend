@@ -81,7 +81,6 @@ ignore_missing_imports = "True"
 
 [tool.pylint]
 disable = ["C0114", "C0116"]
-ignore = ["notes", "migrations"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

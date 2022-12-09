@@ -51,7 +51,6 @@
         "python.analysis.typeCheckingMode": "basic",
         "python.formatting.provider": "black",
         "python.linting.enabled": true,
-        "python.linting.ignorePatterns": ["/migrations/**", "/notes/**"],
         "python.pythonPath": "/app/.venv/bin/python",
         "python.linting.pylintPath": "/app/.venv/bin/pylint",
         "python.linting.pylintEnabled": true,
@@ -59,6 +58,11 @@
           "titleBar.activeBackground": "#FF00FF",
           "titleBar.activeForeground": "#ffffff"
         },
+        "pylint.args": [
+          "--ignore docs",
+          "--ignore migrations",
+          "--ignore notes"
+        ],
         "window.title": "${localWorkspaceFolderBasename}",
         "yaml.format.enable": true
       }
