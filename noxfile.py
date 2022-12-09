@@ -9,6 +9,7 @@ PYTHON_VERSION = "3.8"
 
 LOCATIONS = ["src", "tests", "noxfile.py", "docs/conf.py"]
 nox.options.sessions = (
+    "docs",
     "tests",
     "typeguard",
 )
