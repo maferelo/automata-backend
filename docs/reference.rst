@@ -18,5 +18,3 @@ app.wikipedia
 
 .. automodule:: app.wikipedia
    :members:
-
-   sphinx-build docs docs/_build
