@@ -10,3 +10,4 @@ __pycache__/
 *.csv
 dist/
 docker-compose.override.yml
+docs/_build/
