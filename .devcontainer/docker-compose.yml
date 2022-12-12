@@ -11,7 +11,6 @@ services:
       DOCKER_BUILDKIT: 1
     volumes:
       - ~/.bash_history:/home/vscode/.bash_history:cache
-      - ~/.gitconfig:/home/vscode/.gitconfig
       - extensions-cache:/home/vscode/.vscode-server/extensions:cache
       - home-cache:/home/vscode/.cache:cache
 

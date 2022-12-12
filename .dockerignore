@@ -3,7 +3,6 @@ __pycache__/
 .nox/
 .venv
 .vscode/
-**/.git
 dist/
 docker-compose.override.yml
 notes/
