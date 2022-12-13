@@ -5,14 +5,10 @@ import nox
 from nox_poetry import Session
 from nox_poetry import session as _session
 
+PACKAGE = "app"
 PYTHON_VERSION = "3.8"
-
 LOCATIONS = ["src", "tests", "noxfile.py", "docs/conf.py"]
-nox.options.sessions = (
-    "docs",
-    "tests",
-    "typeguard",
-)
+nox.options.sessions = ("docs", "tests", "typeguard", "xdoctest")
 
 
 @_session(python=PYTHON_VERSION, reuse_venv=True)
@@ -60,3 +56,12 @@ def typeguard(session: Session) -> None:
     session.install(".")
     session.install("pytest", "typeguard", "pytest-mock", "pygments")
     session.run("pytest", "--typeguard-packages=app", *session.posargs)
+
+
+@_session(python=PYTHON_VERSION, reuse_venv=True)
+def xdoctest(session: Session) -> None:
+    """Run examples with xdoctest."""
+    args = session.posargs or ["all"]
+    session.install(".")
+    session.install("xdoctest")
+    session.run("python", "-m", "xdoctest", PACKAGE, *args)
