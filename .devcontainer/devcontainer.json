@@ -53,14 +53,18 @@
         "python.linting.enabled": true,
         "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
         "python.linting.pylintEnabled": true,
+        "python.linting.pylintPath": "${workspaceFolder}/.venv/bin/pylint",
         "workbench.colorCustomizations": {
           "titleBar.activeBackground": "#FF00FF",
           "titleBar.activeForeground": "#ffffff"
         },
         "pylint.args": [
-          "--ignore docs",
-          "--ignore migrations",
-          "--ignore notes"
+          "--ignore",
+          "docs",
+          "--ignore",
+          "migrations",
+          "--ignore",
+          "notes"
         ],
         "window.title": "${localWorkspaceFolderBasename}",
         "yaml.format.enable": true

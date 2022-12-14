@@ -98,6 +98,12 @@ repos:
         name: mypy
         types:
           - python
+      - entry: poetry run pylint
+        id: pylint
+        language: system
+        name: pylint
+        types:
+          - python
       - args:
           - --py37-plus
         description: Automatically upgrade syntax for newer versions.
