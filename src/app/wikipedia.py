@@ -1,4 +1,4 @@
-"""Client for the Wikipedia REST API, version 1.0.
+"""Client for the Wikipedia REST API, version 1.
 
 See `API documentation <https://en.wikipedia.org/api/rest_v1/#/>`_.
 """
