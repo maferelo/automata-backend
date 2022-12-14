@@ -80,9 +80,6 @@ profile = "black"
 exclude = [".env", ".venv", "apps", "notes", "migrations"]
 ignore_missing_imports = "True"
 
-[tool.pylint]
-disable = ["C0114", "C0116"]
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
