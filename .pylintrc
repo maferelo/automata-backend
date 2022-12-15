@@ -1,3 +1,2 @@
 [MAIN]
-disable = "C0114", "C0116"
-ignore-paths = ["^docs/.*$", "^migrations/.*$", "^notes/.*$"]
+ignore-paths=/app/docs/,/app/migrations/

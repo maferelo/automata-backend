@@ -1,5 +1,9 @@
 [flake8]
 application-import-names = app,src,tests
+exclude =
+    docs/*.py,
+    migrations/*.py,
+    notes/*.py,
 ignore = E203,E501,W503
 import-order-style = google
 max-line-length = 80
