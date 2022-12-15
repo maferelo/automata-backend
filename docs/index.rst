@@ -1,5 +1,5 @@
-The Hypermodern Python Project
-==============================
+Automata's python backend 
+=========================
 
 .. toctree::
    :hidden:
@@ -8,9 +8,6 @@ The Hypermodern Python Project
    license
    reference
 
-The example project for the
-`Hypermodern Python <https://medium.com/@cjolowicz/hypermodern-python-d44485d9d769>`_
-article series.
 The command-line interface prints random facts to your console,
 using the `Wikipedia API <https://en.wikipedia.org/api/rest_v1/#/>`_.
 
@@ -18,22 +15,22 @@ using the `Wikipedia API <https://en.wikipedia.org/api/rest_v1/#/>`_.
 Installation
 ------------
 
-To install the Hypermodern Python project,
+To install the project,
 run this command in your terminal:
 
 .. code-block:: console
 
-   $ pip install hypermodern-python
+   $ pip install app
 
 
 Usage
 -----
 
-Hypermodern Python's usage looks like:
+Project's usage looks like:
 
 .. code-block:: console
 
-   $ hypermodern-python [OPTIONS]
+   $ app [OPTIONS]
 
 .. option:: -l <language>, --language <language>
 

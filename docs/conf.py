@@ -1,8 +1,8 @@
 """Sphinx configuration."""
 from datetime import datetime
 
-project = "Hypermodern Python"
-author = "Claudio Jolowicz"
+project = "automata-backend"
+author = "Felipe Restrepo"
 copyright = f"{datetime.now().year}, {author}"
 extensions = [
     "sphinx.ext.autodoc",
