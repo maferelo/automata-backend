@@ -1,5 +1,5 @@
 ---
-exclude: ^(apps/|docs/_build/|migrations/|notes/|.venv/)
+exclude: ^(apps/|docs/|migrations/|notes/|.venv/)
 repos:
   - hooks:
       - args:

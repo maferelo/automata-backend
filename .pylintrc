@@ -1,2 +1,2 @@
 [MAIN]
-ignore-paths=/app/docs/,/app/migrations/
+ignore-paths=/app/docs/,/app/migrations/,/app/notes/
