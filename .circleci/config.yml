@@ -43,6 +43,9 @@ jobs:
       - run:
           name: Get folder structure
           command: ls -al
+      - run:
+          name: wut
+          command: ls -al
       - save_cache:
           paths:
             - ~/.cache/pypoetry
