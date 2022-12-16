@@ -40,6 +40,9 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: poetry run nox 
+      - run:
+          name: Get folder structure
+          command: ls -al
       - save_cache:
           paths:
             - ~/.cache/pypoetry
