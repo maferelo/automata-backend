@@ -3,6 +3,8 @@
 > Personal scripts for automation of everyday tasks
 > using best practices with reference notes.
 
+[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
+
 ## Prerequisites
 
 Clone repository
