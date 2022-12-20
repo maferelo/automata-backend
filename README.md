@@ -5,6 +5,7 @@
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/maferelo/automata-backend/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/maferelo/automata-backend/tree/main)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Prerequisites
 
