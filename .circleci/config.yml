@@ -24,7 +24,7 @@ jobs:
           command: poetry cache list
       - run:
           name: Run tests
-          command: poetry run nox -sr xdoctest
+          command: poetry run nox -rs xdoctest
       - save_cache:
           paths:
             - /home/circleci/project/.nox
