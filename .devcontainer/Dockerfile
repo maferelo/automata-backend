@@ -15,6 +15,9 @@ WORKDIR /app
 COPY .devcontainer/postcreate.sh .devcontainer/
 
 RUN \
+    curl https://cli-assets.heroku.com/install.sh | sh;
+
+RUN \
     chmod +x .devcontainer/postcreate.sh; \
     chown -R vscode:vscode .devcontainer
 

@@ -12,6 +12,7 @@
         "eamodio.gitlens",
         "esbenp.prettier-vscode",
         "github.copilot",
+        "ivangabriele.vscode-heroku",
         "KevinRose.vsc-python-indent",
         "LittleFoxTeam.vscode-python-test-adapter",
         "matangover.mypy",
