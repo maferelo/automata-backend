@@ -9,12 +9,18 @@ jobs:
       - image: cimg/python:3.8.15
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - venvs-cache
+      - python/install-packages:
+          pkg-manager: poetry
       - run:
-          name: Install pre-commit
-          command: pip install pre-commit
-      - run:
-          name: Check folde structure
-          command: ls -al
+          name: Lint
+          command: poetry run pre-commit run -a
+      - save_cache:
+          paths:
+            - /home/circleci/project/.venv
+          key: venvs-cache
   test:
     docker:
       - image: cimg/python:3.8.15
@@ -25,9 +31,6 @@ jobs:
             - venvs-cache
       - python/install-packages:
           pkg-manager: poetry
-      - run:
-          name: List Poetry cache
-          command: poetry cache list
       - run:
           name: Run tests
           command: poetry run nox -r
