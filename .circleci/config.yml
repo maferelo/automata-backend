@@ -15,7 +15,7 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - run:
-          name: Run tests
+          name: Run
           command: poetry run nox -rs docs xdoctest
       - save_cache:
           paths:
@@ -33,7 +33,7 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - run:
-          name: Lint
+          name: Run
           command: poetry run pre-commit run --all
       - save_cache:
           paths:
@@ -51,8 +51,8 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - run:
-          name: Run tests
-          command: poetry run nox -r tests
+          name: Run
+          command: poetry run nox -rs tests
       - save_cache:
           paths:
             - /home/circleci/project/.nox
@@ -62,6 +62,24 @@ jobs:
           path: test-results
       - store_artifacts:
           path: htmlcov
+  typing:
+    docker:
+      - image: cimg/python:3.8.15
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - venvs-cache-{{ checksum "poetry.lock" }}
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run
+          command: poetry run nox -rs typeguard
+      - save_cache:
+          paths:
+            - /home/circleci/project/.nox
+            - /home/circleci/project/.venv
+          key: venvs-cache-{{ checksum "poetry.lock" }}
 
 workflows:
   sample:
@@ -69,3 +87,4 @@ workflows:
       - docs
       - lint
       - test
+      - typing
