@@ -29,9 +29,6 @@ jobs:
     # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - poetry-cache
       - python/install-packages:
           pkg-manager: poetry
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
@@ -46,10 +43,6 @@ jobs:
       - run:
           name: wut
           command: ls -al
-      - save_cache:
-          paths:
-            - ~/.cache/pypoetry
-          key: poetry-cache
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
