@@ -12,6 +12,9 @@ jobs:
       - run:
           name: Install pre-commit
           command: pip install pre-commit
+      - run:
+          name: Check folde structure
+          command: ls -al
   test:
     docker:
       - image: cimg/python:3.8.15
