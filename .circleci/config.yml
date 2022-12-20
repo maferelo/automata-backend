@@ -4,6 +4,24 @@ orbs:
   python: circleci/python@1.5.0
 
 jobs:
+  docs:
+    docker:
+      - image: cimg/python:3.8.15
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - venvs-cache-{{ checksum "poetry.lock" }}
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run tests
+          command: poetry run nox -rs docs xdoctest
+      - save_cache:
+          paths:
+            - /home/circleci/project/.nox
+            - /home/circleci/project/.venv
+          key: venvs-cache-{{ checksum "poetry.lock" }}
   lint:
     docker:
       - image: cimg/python:3.8.15
@@ -29,24 +47,25 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - venvs-cache
+            - venvs-cache-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
           name: Run tests
-          command: poetry run nox -r
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: htmlcov
+          command: poetry run nox -r tests
       - save_cache:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: venvs-cache
+          key: venvs-cache-{{ checksum "poetry.lock" }}
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: htmlcov
 
 workflows:
   sample:
     jobs:
+      - docs
       - lint
       - test
