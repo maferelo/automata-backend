@@ -11,7 +11,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - venvs-cache
+            - venvs-cache-{{ checksum "pyproject.toml" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -20,7 +20,8 @@ jobs:
       - save_cache:
           paths:
             - /home/circleci/project/.venv
-          key: venvs-cache
+            - ~/.cache/pre-commit
+          key: venvs-cache-{{ checksum "pyproject.toml" }}
   test:
     docker:
       - image: cimg/python:3.8.15
@@ -28,7 +29,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - venvs-cache
+            - venvs-cache-{{ checksum "pyproject.toml" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -38,7 +39,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: venvs-cache
+          key: venvs-cache-{{ checksum "pyproject.toml" }}
 
 workflows:
   sample:
