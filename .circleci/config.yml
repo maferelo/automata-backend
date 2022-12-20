@@ -40,6 +40,24 @@ jobs:
             - /home/circleci/project/.venv
             - ~/.cache/pre-commit
           key: lint-cache-{{ checksum ".pre-commit-config.yaml" }}
+  security:
+    docker:
+      - image: cimg/python:3.8.15
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - venvs-cache-{{ checksum "poetry.lock" }}
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run
+          command: poetry run nox -rs safety
+      - save_cache:
+          paths:
+            - /home/circleci/project/.nox
+            - /home/circleci/project/.venv
+          key: venvs-cache-{{ checksum "poetry.lock" }}
   test:
     docker:
       - image: cimg/python:3.8.15
@@ -86,5 +104,6 @@ workflows:
     jobs:
       - docs
       - lint
+      - security
       - test
       - typing
