@@ -16,7 +16,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Lint
-          command: poetry run pre-commit run --files src/app/wikipedia.py
+          command: poetry run pre-commit run --all
       - save_cache:
           paths:
             - /home/circleci/project/.venv
@@ -34,7 +34,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Run tests
-          command: poetry run nox -rs xdoctest
+          command: poetry run nox -r
       - save_cache:
           paths:
             - /home/circleci/project/.nox
