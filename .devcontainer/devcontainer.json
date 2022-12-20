@@ -11,7 +11,7 @@
         "DavidAnson.vscode-markdownlint",
         "eamodio.gitlens",
         "esbenp.prettier-vscode",
-        "GitHub.copilot",
+        "github.copilot",
         "KevinRose.vsc-python-indent",
         "LittleFoxTeam.vscode-python-test-adapter",
         "matangover.mypy",
