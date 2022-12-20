@@ -16,26 +16,20 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - nox-cache
-      - restore_cache:
-          keys:
-            - venv-cache
+            - venvs-cache
       - python/install-packages:
           pkg-manager: poetry
-      - save_cache:
-          paths:
-            - /home/circleci/project/.venv
-          key: venv-cache
       - run:
           name: List Poetry cache
           command: poetry cache list
       - run:
           name: Run tests
-          command: poetry run nox -s xdoctest
+          command: poetry run nox -sr xdoctest
       - save_cache:
           paths:
             - /home/circleci/project/.nox
-          key: nox-cache
+            - /home/circleci/project/.venv
+          key: venvs-cache
 
 workflows:
   sample:
