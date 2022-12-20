@@ -11,7 +11,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - venvs-cache-{{ checksum ".pre-commit-config.yaml" }}
+            - lint-cache-{{ checksum ".pre-commit-config.yaml" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -21,7 +21,7 @@ jobs:
           paths:
             - /home/circleci/project/.venv
             - ~/.cache/pre-commit
-          key: venvs-cache-{{ checksum ".pre-commit-config.yaml" }}
+          key: lint-cache-{{ checksum ".pre-commit-config.yaml" }}
   test:
     docker:
       - image: cimg/python:3.8.15
