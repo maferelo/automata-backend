@@ -29,7 +29,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - venvs-cache-{{ checksum "pyproject.toml" }}
+            - venvs-cache
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -39,7 +39,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: venvs-cache-{{ checksum "pyproject.toml" }}
+          key: venvs-cache
       - store_test_results:
           path: test-results
       - store_artifacts:
