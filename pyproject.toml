@@ -6,7 +6,7 @@ documentation = "https://automata-backend.readthedocs.io"
 authors = ["Felipe Restrepo <maferelo@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "3.8.16"
 python-crontab = "^2.6.0"
 python-telegram-bot = "^13.12"
 fastapi = "^0.78.0"
