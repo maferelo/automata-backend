@@ -34,7 +34,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Run tests
-          command: poetry run nox -r xdoctest
+          command: poetry run nox -rs xdoctest
       - save_cache:
           paths:
             - /home/circleci/project/.nox
