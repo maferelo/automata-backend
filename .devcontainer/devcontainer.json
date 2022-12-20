@@ -7,6 +7,7 @@
         "almenon.arepl",
         "anseki.vscode-color",
         "christian-kohler.path-intellisense",
+        "circleci.circleci",
         "DavidAnson.vscode-markdownlint",
         "eamodio.gitlens",
         "esbenp.prettier-vscode",
