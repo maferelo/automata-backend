@@ -20,6 +20,7 @@ def coverage(session: Session) -> None:
 
     if not session.posargs and any(Path().glob(".coverage.*")):
         session.run("coverage", "combine")
+        session.run("coverage", "html")
 
     session.run("coverage", *args)
 
@@ -44,7 +45,15 @@ def tests(session: Session) -> None:
     session.install(".")
     session.install("coverage", "pytest", "pytest-mock", "pygments")
     try:
-        session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
+        session.run(
+            "coverage",
+            "run",
+            "--parallel",
+            "-m",
+            "pytest",
+            "--junitxml=test-results/junit.xml",
+            *session.posargs,
+        )
     finally:
         if session.interactive:
             session.notify("coverage", posargs=[])
