@@ -9,6 +9,9 @@ jobs:
       - image: cimg/python:3.8.15
     steps:
       - checkout
+      - run:
+          name: Install pre-commit
+          command: pip install pre-commit
   test:
     docker:
       - image: cimg/python:3.8.15
@@ -24,7 +27,7 @@ jobs:
           command: poetry cache list
       - run:
           name: Run tests
-          command: poetry run nox -rs xdoctest
+          command: poetry run nox -r
       - save_cache:
           paths:
             - /home/circleci/project/.nox
