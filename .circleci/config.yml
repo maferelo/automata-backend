@@ -11,17 +11,17 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - venvs-cache-{{ checksum "poetry.lock" }}
+            - docs-cache-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
           name: Run
-          command: poetry run nox -rs docs xdoctest
+          command: poetry run nox -s docs xdoctest
       - save_cache:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: venvs-cache-{{ checksum "poetry.lock" }}
+          key: docs-cache-{{ checksum "poetry.lock" }}
       - store_artifacts:
           path: docs/_build
   lint:
@@ -49,17 +49,17 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - venvs-cache-{{ checksum "poetry.lock" }}
+            - security-cache-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
           name: Run
-          command: poetry run nox -rs safety
+          command: poetry run nox -s safety
       - save_cache:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: venvs-cache-{{ checksum "poetry.lock" }}
+          key: security-cache-{{ checksum "poetry.lock" }}
   test:
     docker:
       - image: cimg/python:3.8.15
@@ -68,26 +68,21 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - venvs-cache-{{ checksum "poetry.lock" }}
+            - test-cache-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
           name: Run
           command: |
-            ls -al .nox
-            ls -al .nox/coverage
-      - run:
-          name: Run
-          command: |
             set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --rsplit-by=timings)
+            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
             echo $TEST_FILES
-            poetry run nox -- -rs tests -- $TEST_FILES
+            poetry run nox -- -s tests -- $TEST_FILES
       - save_cache:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: venvs-cache-{{ checksum "poetry.lock" }}
+          key: test-cache-{{ checksum "poetry.lock" }}
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -100,20 +95,20 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - venvs-cache-{{ checksum "poetry.lock" }}
+            - typing-cache-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
           name: Run
           command: |
             set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --rsplit-by=timings)
-            poetry run nox -- -rs typeguard -- $TEST_FILES
+            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
+            poetry run nox -- -s typeguard -- $TEST_FILES
       - save_cache:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: venvs-cache-{{ checksum "poetry.lock" }}
+          key: typing-cache-{{ checksum "poetry.lock" }}
 
 workflows:
   sample:
