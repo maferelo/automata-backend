@@ -40,6 +40,10 @@ jobs:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
           key: venvs-cache-{{ checksum "pyproject.toml" }}
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: htmlcov
 
 workflows:
   sample:
