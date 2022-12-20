@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
-          command: poetry run nox -s tests
+          command: poetry run nox -s xdoctest
       - run:
           name: Get Folder Structure
           command: ls -al
