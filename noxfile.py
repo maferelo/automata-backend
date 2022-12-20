@@ -52,6 +52,7 @@ def tests(session: Session) -> None:
             "-m",
             "pytest",
             "--junitxml=test-results/junit.xml",
+            "--verbose",
             *session.posargs,
         )
     finally:

@@ -3,6 +3,7 @@
 > Personal scripts for automation of everyday tasks
 > using best practices with reference notes.
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/maferelo/automata-backend/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/maferelo/automata-backend/tree/main)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 
 ## Prerequisites
