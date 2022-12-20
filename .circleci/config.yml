@@ -16,7 +16,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Run
-          command: poetry run nox -s docs xdoctest
+          command: poetry run nox -rs docs xdoctest
       - save_cache:
           paths:
             - /home/circleci/project/.nox
@@ -54,7 +54,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Run
-          command: poetry run nox -s safety
+          command: poetry run nox -rs safety
       - save_cache:
           paths:
             - /home/circleci/project/.nox
@@ -74,18 +74,15 @@ jobs:
       - run:
           name: Run
           command: |
-            set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
-            echo $TEST_FILES
-            echo $TEST_FILES
-            echo $TEST_FILES
+            ls -al .nox
+            ls -al .nox/coverage
       - run:
           name: Run
           command: |
             set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
+            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --rsplit-by=timings)
             echo $TEST_FILES
-            poetry run nox -- -s tests -- $TEST_FILES
+            poetry run nox -- -rs tests -- $TEST_FILES
       - save_cache:
           paths:
             - /home/circleci/project/.nox
@@ -110,8 +107,8 @@ jobs:
           name: Run
           command: |
             set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
-            poetry run nox -- -s typeguard -- $TEST_FILES
+            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --rsplit-by=timings)
+            poetry run nox -- -rs typeguard -- $TEST_FILES
       - save_cache:
           paths:
             - /home/circleci/project/.nox
