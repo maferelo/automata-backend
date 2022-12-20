@@ -22,6 +22,8 @@ jobs:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
           key: venvs-cache-{{ checksum "poetry.lock" }}
+      - store_artifacts:
+          path: docs/_build
   lint:
     docker:
       - image: cimg/python:3.8.15
