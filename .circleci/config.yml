@@ -11,7 +11,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - docs-cache-{{ checksum "poetry.lock" }}
+            - docs-cache-v2-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -21,7 +21,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: docs-cache-{{ checksum "poetry.lock" }}
+          key: docs-cache-v2-{{ checksum "poetry.lock" }}
       - store_artifacts:
           path: docs/_build
   lint:
@@ -31,7 +31,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - lint-cache-{{ checksum ".pre-commit-config.yaml" }}
+            - lint-cache-v2-{{ checksum ".pre-commit-config.yaml" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -41,7 +41,7 @@ jobs:
           paths:
             - /home/circleci/project/.venv
             - ~/.cache/pre-commit
-          key: lint-cache-{{ checksum ".pre-commit-config.yaml" }}
+          key: lint-cache-v2-{{ checksum ".pre-commit-config.yaml" }}
   security:
     docker:
       - image: cimg/python:3.8.15
@@ -49,7 +49,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - security-cache-{{ checksum "poetry.lock" }}
+            - security-cache-v2-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -59,7 +59,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: security-cache-{{ checksum "poetry.lock" }}
+          key: security-cache-v2-{{ checksum "poetry.lock" }}
   test:
     docker:
       - image: cimg/python:3.8.15
@@ -68,7 +68,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - test-cache-{{ checksum "poetry.lock" }}
+            - test-cache-v2-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -82,7 +82,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: test-cache-{{ checksum "poetry.lock" }}
+          key: test-cache-v2-{{ checksum "poetry.lock" }}
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -95,7 +95,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - typing-cache-{{ checksum "poetry.lock" }}
+            - typing-cache-v2-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -108,7 +108,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: typing-cache-{{ checksum "poetry.lock" }}
+          key: typing-cache-v2-{{ checksum "poetry.lock" }}
 
 workflows:
   sample:
