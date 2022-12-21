@@ -6,7 +6,7 @@ orbs:
 jobs:
   docs:
     docker:
-      - image: cimg/python:{{ .Environment.PYTHON_VERSION }}
+      - image: cimg/python:3.8.16
     steps:
       - checkout
       - restore_cache:
@@ -26,7 +26,7 @@ jobs:
           path: docs/_build
   lint:
     docker:
-      - image: cimg/python:{{ .Environment.PYTHON_VERSION }}
+      - image: cimg/python:3.8.16
     steps:
       - checkout
       - restore_cache:
@@ -44,7 +44,7 @@ jobs:
           key: lint-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum ".pre-commit-config.yaml" }}
   security:
     docker:
-      - image: cimg/python:{{ .Environment.PYTHON_VERSION }}
+      - image: cimg/python:3.8.16
     steps:
       - checkout
       - restore_cache:
@@ -62,7 +62,7 @@ jobs:
           key: security-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum "poetry.lock" }}
   test:
     docker:
-      - image: cimg/python:{{ .Environment.PYTHON_VERSION }}
+      - image: cimg/python:3.8.16
     parallelism: 4
     steps:
       - checkout
@@ -89,7 +89,7 @@ jobs:
           path: htmlcov
   typing:
     docker:
-      - image: cimg/python:{{ .Environment.PYTHON_VERSION }}
+      - image: cimg/python:3.8.16
     parallelism: 4
     steps:
       - checkout
