@@ -10,6 +10,12 @@ parameters:
   image-tag:
     type: string
     default: 3.8.16
+  nox-envs-path:
+    type: string
+    default: /home/circleci/project/.nox
+  venv-path:
+    type: string
+    default: /home/circleci/project/.venv
 
 jobs:
   docs:
@@ -27,8 +33,8 @@ jobs:
           command: poetry run nox -s docs xdoctest
       - save_cache:
           paths:
-            - /home/circleci/project/.nox
-            - /home/circleci/project/.venv
+            - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.venv-path >>
           key: docs-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - store_artifacts:
           path: docs/_build
@@ -47,7 +53,7 @@ jobs:
           command: poetry run pre-commit run --all
       - save_cache:
           paths:
-            - /home/circleci/project/.venv
+            - << pipeline.parameters.venv-path >>
             - ~/.cache/pre-commit
           key: lint-cache-v<< pipeline.parameters.cache-version >>-{{ checksum ".pre-commit-config.yaml" }}
   security:
@@ -65,8 +71,8 @@ jobs:
           command: poetry run nox -s safety
       - save_cache:
           paths:
-            - /home/circleci/project/.nox
-            - /home/circleci/project/.venv
+            - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.venv-path >>
           key: security-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
   test:
     docker:
@@ -88,8 +94,8 @@ jobs:
             poetry run nox -- -s tests -- $TEST_FILES
       - save_cache:
           paths:
-            - /home/circleci/project/.nox
-            - /home/circleci/project/.venv
+            - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.venv-path >>
           key: test-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - store_test_results:
           path: test-results
@@ -114,8 +120,8 @@ jobs:
             poetry run nox -- -s typeguard -- $TEST_FILES
       - save_cache:
           paths:
-            - /home/circleci/project/.nox
-            - /home/circleci/project/.venv
+            - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.venv-path >>
           key: typing-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
 
 workflows:
