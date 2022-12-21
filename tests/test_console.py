@@ -6,7 +6,7 @@ import requests
 from click.testing import CliRunner
 from pytest_mock import MockFixture
 
-from app import console
+from src.app import console
 
 
 @pytest.fixture
@@ -18,7 +18,7 @@ def _runner() -> CliRunner:
 @pytest.fixture
 def _mock_wikipedia_random_page(mocker: MockFixture) -> Mock:
     """Fixture for mocking wikipedia.random_page."""
-    return mocker.patch("app.wikipedia.random_page")
+    return mocker.patch("src.app.wikipedia.random_page")
 
 
 def test_main_succeeds(_runner: CliRunner, _mock_requests_get: Mock) -> None:

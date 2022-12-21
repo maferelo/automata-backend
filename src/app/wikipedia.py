@@ -45,7 +45,7 @@ def random_page(language: str = "en") -> Page:
             contained an invalid body.
 
     Example:
-        >>> from app import wikipedia
+        >>> from src.app import wikipedia
         >>> page = wikipedia.random_page(language="en")
         >>> bool(page.title)
         True
