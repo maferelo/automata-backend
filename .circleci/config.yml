@@ -4,6 +4,9 @@ orbs:
   python: circleci/python@1.5.0
 
 parameters:
+  cache-version:
+    type: integer
+    default: 3
   image-tag:
     type: string
     default: 3.8.16
@@ -16,7 +19,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - docs-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum "poetry.lock" }}
+            - docs-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -26,7 +29,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: docs-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum "poetry.lock" }}
+          key: docs-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - store_artifacts:
           path: docs/_build
   lint:
@@ -36,7 +39,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - lint-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum ".pre-commit-config.yaml" }}
+            - lint-cache-v<< pipeline.parameters.cache-version >>-{{ checksum ".pre-commit-config.yaml" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -46,7 +49,7 @@ jobs:
           paths:
             - /home/circleci/project/.venv
             - ~/.cache/pre-commit
-          key: lint-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum ".pre-commit-config.yaml" }}
+          key: lint-cache-v<< pipeline.parameters.cache-version >>-{{ checksum ".pre-commit-config.yaml" }}
   security:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -54,7 +57,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - security-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum "poetry.lock" }}
+            - security-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -64,7 +67,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: security-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum "poetry.lock" }}
+          key: security-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
   test:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -73,7 +76,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - test-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum "poetry.lock" }}
+            - test-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -87,7 +90,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: test-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum "poetry.lock" }}
+          key: test-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -100,7 +103,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - typing-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum "poetry.lock" }}
+            - typing-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -113,7 +116,7 @@ jobs:
           paths:
             - /home/circleci/project/.nox
             - /home/circleci/project/.venv
-          key: typing-cache-v{{ .Environment.CACHE_VERSION }}-{{ checksum "poetry.lock" }}
+          key: typing-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
 
 workflows:
   sample:
