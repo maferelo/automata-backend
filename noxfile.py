@@ -5,7 +5,7 @@ from typing import Any
 import nox
 
 MODULE_PATH = "src/"
-nox.options.sessions = ("docs", "tests", "typeguard", "xdoctest")
+nox.options.sessions = ("docs", "tests", "typeguard", "xdoctest", "coverage")
 
 
 def get_requirements(session: nox.Session):
@@ -103,7 +103,15 @@ def tests(session: nox.Session) -> None:
     install_with_constraints(
         session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock"
     )
-    session.run("pytest", *args)
+    session.run(
+        "pytest",
+        "--junitxml=test-results/junit.xml",
+        "--cov-report",
+        "html:htmlcov",
+        "--cov=src",
+        "-v",
+        *args,
+    )
 
 
 @nox.session(reuse_venv=True)
