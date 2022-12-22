@@ -108,7 +108,6 @@ def tests(session: nox.Session) -> None:
         "--junitxml=test-results/junit.xml",
         "--cov-report",
         "html:htmlcov",
-        "--cov=src",
         "-v",
         *args,
     )
