@@ -86,15 +86,12 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - run:
-          name: Pytest
+          name: Run
           command: |
             set -e
             TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
             echo $TEST_FILES
-            poetry run nox -- -s tests -- $TEST_FILES --junitxml=test-results/junit.xml
-      - run:
-          name: Coverage
-          command: poetry run nox -- -s coverage -- html
+            poetry run nox -- -s tests -- $TEST_FILES
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
