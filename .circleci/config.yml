@@ -1,6 +1,7 @@
 version: 2.1
 
 orbs:
+  codecov: codecov/codecov@3.2.4
   python: circleci/python@1.5.0
 
 parameters:
@@ -125,7 +126,7 @@ jobs:
           key: typing-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
 
 workflows:
-  sample:
+  upload-to-codecov:
     jobs:
       - docs:
           context:
