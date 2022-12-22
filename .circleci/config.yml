@@ -99,6 +99,25 @@ jobs:
           key: test-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - store_test_results:
           path: test-results
+  coverage:
+    docker:
+      - image: cimg/python:<< pipeline.parameters.image-tag >>
+    parallelism: 4
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - test-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run
+          command: poetry run nox -s coverage -- html
+      - save_cache:
+          paths:
+            - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.venv-path >>
+          key: test-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - store_artifacts:
           path: htmlcov
   typing:
@@ -137,6 +156,9 @@ workflows:
           context:
             - context
       - test:
+          context:
+            - context
+      - coverage:
           context:
             - context
       - typing:
