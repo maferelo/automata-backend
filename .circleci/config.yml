@@ -112,7 +112,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Run
-          command: poetry run nox -s coverage -- html
+          command: poetry run nox -- -s coverage -- html
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
