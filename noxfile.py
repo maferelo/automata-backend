@@ -70,6 +70,7 @@ def coverage(session: nox.Session) -> None:
     """Produce the coverage report."""
     args = session.posargs or ["html"]
     install_with_constraints(session, "coverage[toml]")
+    session.run("coverage", "report")
     session.run("coverage", *args)
 
 
@@ -98,16 +99,19 @@ def safety(session: nox.Session) -> None:
 @nox.session(reuse_venv=True)
 def tests(session: nox.Session) -> None:
     """Run the test suite."""
-    args = session.posargs or ["--cov=src", "-m", "not e2e"]
+    args = session.posargs or ["-m", "not e2e"]
     install_requirements(session)
     install_with_constraints(
-        session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock"
+        session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock", "pytest-xdist"
     )
     session.run(
         "pytest",
+        "-n",
+        "4",
+        "--cov",
+        "src",
+        "--cov-fail-under=0",
         "--junitxml=test-results/junit.xml",
-        "-cov",
-        "src/",
         "-v",
         *args,
     )
@@ -118,8 +122,10 @@ def typeguard(session: nox.Session) -> None:
     """Runtime type checking using Typeguard."""
     args = session.posargs or ["-m", "not e2e"]
     install_requirements(session)
-    install_with_constraints(session, "pytest", "typeguard", "pytest-mock", "pygments")
-    session.run("pytest", "--typeguard-packages=src", *args)
+    install_with_constraints(
+        session, "pytest", "typeguard", "pytest-mock", "pygments", "pytest-xdist"
+    )
+    session.run("pytest", "--typeguard-packages=src", "-n", "4", *args)
 
 
 @nox.session(reuse_venv=True)

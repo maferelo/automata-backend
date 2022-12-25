@@ -62,6 +62,7 @@ flake8-docstrings = "^1.6.0"
 sphinx = "^5.3.0"
 sphinx-autodoc-typehints = "^1.19.5"
 xdoctest = "^1.1.0"
+pytest-xdist = "^3.1.0"
 
 [tool.poetry.scripts]
 app = "src.app.console:main"
