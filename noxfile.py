@@ -8,7 +8,8 @@ from app.utils import validate_file_hash
 
 MODULE_PATH = "src/"
 IS_ENV_UPDATED = validate_file_hash("poetry.lock")
-nox.options.sessions = ("docs", "tests", "typeguard", "xdoctest", "coverage")
+print(f"IS_ENV_UPDATED: {IS_ENV_UPDATED}")
+nox.options.sessions = ("docs", "tests", "typeguard", "xdoctest", "safety", "coverage")
 
 
 def get_requirements(session: nox.Session):
