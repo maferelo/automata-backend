@@ -8,6 +8,8 @@ __pycache__/
 .venv/
 .vscode/
 *.csv
+*.sha256
+coverage.xml
 dist/
 docker-compose.override.yml
 docs/_build/
