@@ -145,7 +145,5 @@ workflows:
          type: approval
          requires:
            - docs
-           - lint
-           - security
            - test
            - typing
