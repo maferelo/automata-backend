@@ -21,6 +21,6 @@ def validate_file_hash(file_path: str) -> bool:
         with open(f"{file_path}.sha256", encoding="utf-8") as file:
             expected_hash = file.read()
     except FileNotFoundError:
-        save_file_hash(file_path)
-        return False
+        expected_hash = None
+    save_file_hash(file_path)
     return expected_hash == get_file_hash(file_path)

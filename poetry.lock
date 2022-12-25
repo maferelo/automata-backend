@@ -1691,14 +1691,14 @@ files = [
 
 [[package]]
 name = "ormar"
-version = "0.11.3"
+version = "0.12.0"
 description = "A simple async ORM with fastapi in mind and pydantic validation."
 category = "main"
 optional = false
 python-versions = ">=3.7.0,<4.0.0"
 files = [
-    {file = "ormar-0.11.3-py3-none-any.whl", hash = "sha256:649e922d70d2bda4e079d93c31accd74583f547dcf7e4eb652120d95e39e5308"},
-    {file = "ormar-0.11.3.tar.gz", hash = "sha256:b82994d8db000685a9bbc4ed53bbbef33811f9fcfd3ae1a0318dff6b1a634f86"},
+    {file = "ormar-0.12.0-py3-none-any.whl", hash = "sha256:bb71e5a9ea6477de1c5ed5acf5692067152ef7452ef9625e5eeb13f165068722"},
+    {file = "ormar-0.12.0.tar.gz", hash = "sha256:fc76a3a1ef602c8c65c6b956bd57ecc4961d3ba750f1deb498cda822a7162288"},
 ]
 
 [package.dependencies]
@@ -3628,4 +3628,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.8.16"
-content-hash = "836f4676ff7d425b7792b6f9aa569cef2f7d640bfae0abcd9b5338932397537a"
+content-hash = "9bd31d5322d79ebece681729513677222a8e7ae4b9294887009dda94ac33ecb0"
