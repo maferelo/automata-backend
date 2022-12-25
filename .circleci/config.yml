@@ -38,7 +38,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Run
-          command: ls -al && poetry run nox -s docs xdoctest && ls -al
+          command: poetry run nox -s docs xdoctest
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
@@ -90,7 +90,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Run
-          command: ls -al && poetry run nox -- -s safety -- -i 51668 -i 51457 && ls -al
+          command: poetry run nox -- -s safety -- -i 51668 -i 51457
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
