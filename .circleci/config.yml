@@ -22,7 +22,23 @@ parameters:
     type: string
     default: /home/circleci/project/.venv
 
+executors:
+  python-executor:
+    docker:
+      - image: cimg/python:<< pipeline.parameters.image-tag >> # context / project UI env-var reference
+    working_directory: /project
+
 jobs:
+  build:
+    executor: python-executor
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./*
   docs:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
