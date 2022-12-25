@@ -8,7 +8,7 @@ orbs:
 parameters:
   cache-version:
     type: integer
-    default: 3
+    default: 4
   image-tag:
     type: string
     default: 3.8.16
