@@ -90,7 +90,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Run
-          command: poetry run nox -- -s safety -- -i 51668 -i 51457
+          command: ls -al && poetry run nox -- -s safety -- -i 51668 -i 51457 && ls -al
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
