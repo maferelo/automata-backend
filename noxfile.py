@@ -110,6 +110,8 @@ def tests(session: nox.Session) -> None:
         "4",
         "--cov",
         "src",
+        "--cov-report",
+        "xml:coverage.xml",
         "--cov-fail-under=0",
         "--junitxml=test-results/junit.xml",
         "-v",
