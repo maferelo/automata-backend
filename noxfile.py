@@ -68,7 +68,7 @@ def install_with_constraints(session: nox.Session, *args: str, **kwargs: Any) ->
 @nox.session(reuse_venv=True)
 def coverage(session: nox.Session) -> None:
     """Produce the coverage report."""
-    args = session.posargs or ["report"]
+    args = session.posargs or ["html"]
     install_with_constraints(session, "coverage[toml]")
     session.run("coverage", *args)
 
@@ -106,8 +106,8 @@ def tests(session: nox.Session) -> None:
     session.run(
         "pytest",
         "--junitxml=test-results/junit.xml",
-        "--cov-report",
-        "html:htmlcov",
+        "-cov",
+        "src/",
         "-v",
         *args,
     )
