@@ -78,7 +78,7 @@ def docs(session: nox.Session) -> None:
         "sphinx-autobuild",
         "sphinx-rtd-theme",
     )
-    session.run("sphinx-build", "docs", "docs/_build")
+    session.run("sphinx-build", "docs", "docs/_build", "-W")
 
 
 @nox.session(reuse_venv=True)
