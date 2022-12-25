@@ -3,7 +3,7 @@ from pydantic import BaseSettings
 from pydantic import Field
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
     """Application settings."""
 
     db_url: str = Field(..., env="DATABASE_URL")
