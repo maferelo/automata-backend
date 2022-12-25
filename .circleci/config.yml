@@ -1,3 +1,4 @@
+---
 version: 2.1
 
 orbs:
@@ -26,7 +27,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - docs-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
+            - >-
+              docs-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -36,7 +40,10 @@ jobs:
           paths:
             - << pipeline.parameters.nox-envs-path >>
             - << pipeline.parameters.venv-path >>
-          key: docs-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
+          key: >-
+            docs-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock" }}
       - store_artifacts:
           path: docs/_build
   lint:
@@ -46,7 +53,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - lint-cache-v<< pipeline.parameters.cache-version >>-{{ checksum ".pre-commit-config.yaml" }}
+            - >-
+              lint-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum ".pre-commit-config.yaml" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -56,7 +66,10 @@ jobs:
           paths:
             - << pipeline.parameters.venv-path >>
             - ~/.cache/pre-commit
-          key: lint-cache-v<< pipeline.parameters.cache-version >>-{{ checksum ".pre-commit-config.yaml" }}
+          key: >-
+            lint-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum ".pre-commit-config.yaml" }}
   security:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -64,7 +77,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - security-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
+            - >-
+              security-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -74,7 +90,10 @@ jobs:
           paths:
             - << pipeline.parameters.nox-envs-path >>
             - << pipeline.parameters.venv-path >>
-          key: security-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
+          key: >-
+            security-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock" }}
   test:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -83,25 +102,34 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - test-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
+            - >-
+              test-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
           name: Run
           command: |
             set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
+            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
+            circleci tests split --split-by=timings)
             echo $TEST_FILES
             poetry run nox -- -s tests -- $TEST_FILES
       - run:
           name: Upload to codecov
           command: |
-              curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov --file /home/circleci/project/coverage.xml
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov --file /home/circleci/project/coverage.xml
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
             - << pipeline.parameters.venv-path >>
-          key: test-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
+          key: >-
+            test-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock" }}
       - store_test_results:
           path: test-results
   typing:
@@ -112,20 +140,27 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - typing-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
+            - >-
+              typing-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
           name: Run
           command: |
             set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
+            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
+            circleci tests split --split-by=timings)
             poetry run nox -- -s typeguard -- $TEST_FILES
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
             - << pipeline.parameters.venv-path >>
-          key: typing-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
+          key: >-
+            typing-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock" }}
 
 workflows:
   upload-to-codecov:
