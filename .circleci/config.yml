@@ -100,8 +100,6 @@ jobs:
           key: test-cache-v<< pipeline.parameters.cache-version >>-{{ checksum "poetry.lock" }}
       - store_test_results:
           path: test-results
-      - store_artifacts:
-          path: htmlcov
   typing:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
