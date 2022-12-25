@@ -190,6 +190,9 @@ jobs:
 workflows:
   upload-to-codecov:
     jobs:
+      - build:
+          context:
+            - context
       - docs:
           context:
             - context
