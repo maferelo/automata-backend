@@ -93,6 +93,10 @@ jobs:
             TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
             echo $TEST_FILES
             poetry run nox -- -s tests -- $TEST_FILES
+      - run:
+          name: Upload to codecov
+          command: |
+              curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
