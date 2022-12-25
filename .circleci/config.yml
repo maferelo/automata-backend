@@ -141,3 +141,11 @@ workflows:
       - typing:
           context:
             - context
+      - Hold-For-Approval:
+         type: approval
+         requires:
+           - docs
+           - lint
+           - security
+           - test
+           - typing
