@@ -96,7 +96,7 @@ jobs:
       - run:
           name: Upload to codecov
           command: |
-              curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
+              curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov --file /home/circleci/project/coverage.xml
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
