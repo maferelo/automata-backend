@@ -4,7 +4,10 @@ from typing import Any
 
 import nox
 
+from app.utils import validate_file_hash
+
 MODULE_PATH = "src/"
+IS_ENV_UPDATED = validate_file_hash("poetry.lock")
 nox.options.sessions = ("docs", "tests", "typeguard", "xdoctest", "coverage")
 
 
@@ -32,20 +35,6 @@ def get_requirements(session: nox.Session):
         return requirements
 
 
-def install_requirements(session: nox.Session) -> None:
-    """Install packages from project's Poetry dependencies.
-
-    This function is a wrapper for nox.sessions.Session.install. It
-    gets the requirements from Poetry's lock file and installs them
-    on the session's virtualenv.
-
-    Arguments:
-        session: The Session object.
-    """
-    requirements = get_requirements(session)
-    session.install("-r", f"{requirements.name}")
-
-
 def install_with_constraints(session: nox.Session, *args: str, **kwargs: Any) -> None:
     """Install packages constrained by Poetry's lock file.
 
@@ -61,8 +50,10 @@ def install_with_constraints(session: nox.Session, *args: str, **kwargs: Any) ->
         args: Command-line arguments for pip.
         kwargs: Additional keyword arguments for Session.install.
     """
-    requirements = get_requirements(session)
-    session.install(f"--constraint={requirements.name}", *args, **kwargs)
+    if not IS_ENV_UPDATED:
+        requirements = get_requirements(session)
+        session.install("-r", f"{requirements.name}")
+        session.install(f"--constraint={requirements.name}", *args, **kwargs)
 
 
 @nox.session(reuse_venv=True)
@@ -77,7 +68,6 @@ def coverage(session: nox.Session) -> None:
 @nox.session(reuse_venv=True)
 def docs(session: nox.Session) -> None:
     """Build the documentation."""
-    install_requirements(session)
     install_with_constraints(
         session,
         "sphinx",
@@ -100,7 +90,6 @@ def safety(session: nox.Session) -> None:
 def tests(session: nox.Session) -> None:
     """Run the test suite."""
     args = session.posargs or ["-m", "not e2e"]
-    install_requirements(session)
     install_with_constraints(
         session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock", "pytest-xdist"
     )
@@ -123,7 +112,6 @@ def tests(session: nox.Session) -> None:
 def typeguard(session: nox.Session) -> None:
     """Runtime type checking using Typeguard."""
     args = session.posargs or ["-m", "not e2e"]
-    install_requirements(session)
     install_with_constraints(
         session, "pytest", "typeguard", "pytest-mock", "pygments", "pytest-xdist"
     )
@@ -134,6 +122,5 @@ def typeguard(session: nox.Session) -> None:
 def xdoctest(session: nox.Session) -> None:
     """Run examples with xdoctest."""
     args = session.posargs or ["all"]
-    install_requirements(session)
     install_with_constraints(session, "xdoctest")
     session.run("python", "-m", "xdoctest", MODULE_PATH, *args)
