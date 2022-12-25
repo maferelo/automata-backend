@@ -12,6 +12,9 @@ parameters:
   image-tag:
     type: string
     default: 3.8.16
+  poetry-hash-path:
+    type: string
+    default: /home/circleci/project/poetry.lock.sha256
   nox-envs-path:
     type: string
     default: /home/circleci/project/.nox
@@ -39,6 +42,7 @@ jobs:
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.poetry-hash-path >>
             - << pipeline.parameters.venv-path >>
           key: >-
             docs-cache
@@ -65,6 +69,7 @@ jobs:
       - save_cache:
           paths:
             - << pipeline.parameters.venv-path >>
+            - << pipeline.parameters.poetry-hash-path >>
             - ~/.cache/pre-commit
           key: >-
             lint-cache
@@ -89,6 +94,7 @@ jobs:
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.poetry-hash-path >>
             - << pipeline.parameters.venv-path >>
           key: >-
             security-cache
@@ -126,6 +132,7 @@ jobs:
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.poetry-hash-path >>
             - << pipeline.parameters.venv-path >>
           key: >-
             test-cache
@@ -157,6 +164,7 @@ jobs:
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.poetry-hash-path >>
             - << pipeline.parameters.venv-path >>
           key: >-
             typing-cache
