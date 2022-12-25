@@ -113,9 +113,10 @@ jobs:
           command: |
             set -e
             TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
-            circleci tests split --split-by=timings)
+              circleci tests split --split-by=timings)
             echo $TEST_FILES
-            poetry run nox -- -s tests -- $TEST_FILES
+            poetry run nox -- -s tests -- -m "not e2e" --cov-fail-under=0 \
+              --cov-report xml:coverage.xml $TEST_FILES
       - run:
           name: Upload to codecov
           command: |
@@ -151,7 +152,7 @@ jobs:
           command: |
             set -e
             TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
-            circleci tests split --split-by=timings)
+              circleci tests split --split-by=timings)
             poetry run nox -- -s typeguard -- $TEST_FILES
       - save_cache:
           paths:
