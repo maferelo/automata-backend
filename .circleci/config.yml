@@ -34,6 +34,9 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
+      - run:
+          name: Run
+          command: ls -al
       - persist_to_workspace:
           root: .
           paths:
@@ -41,8 +44,17 @@ jobs:
   docs-v2:
     executor: python-executor
     steps:
+      - run:
+          name: Run
+          command: ls -al
       - attach_workspace:
           at: .
+      - run:
+          name: Run
+          command: ls -al
+      - run:
+          name: Run
+          command: touch its-working.txt
       - persist_to_workspace:
           root: .
           paths:
