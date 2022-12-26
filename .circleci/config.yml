@@ -48,13 +48,14 @@ jobs:
             echo $TEST_FILES
             poetry run nox -- -s tests -- -m "not e2e" --cov-fail-under=0 \
               --cov-report xml:coverage.xml $TEST_FILES
-            mkdir workspace
+            mkdir -p workspace
             cp .coverage workspace/.coverage.$CIRCLE_NODE_INDEX
             ls -al
+            ls -al workspace/
       - persist_to_workspace:
           root: workspace
           paths:
-            - .coverage.$CIRCLE_NODE_INDEX
+            - ./.coverage.$CIRCLE_NODE_INDEX
       - run:
           name: Upload to codecov
           command: |
