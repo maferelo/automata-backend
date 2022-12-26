@@ -50,6 +50,10 @@ jobs:
               --cov-report xml:coverage.xml $TEST_FILES
             cp .coverage .coverage.$CIRCLE_NODE_INDEX
             ls -al
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - .coverage.$CIRCLE_NODE_INDEX
       - run:
           name: Upload to codecov
           command: |
