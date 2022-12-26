@@ -80,6 +80,20 @@ jobs:
           root: .
           paths:
             - ./*
+  coverage:
+    executor: python-executor
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run
+          command: nox -s coverage
+      - run:
+          name: Upload to codecov
+          command: |
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov --file /home/circleci/project/coverage.xml
   docs:
     executor: python-executor
     steps:
@@ -238,6 +252,11 @@ workflows:
             - context
           requires:
             - build
+      - coverage:
+          context:
+            - context
+          requires:
+            - docs-v2
       - docs:
           context:
             - context
