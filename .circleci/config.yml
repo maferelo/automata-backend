@@ -82,15 +82,6 @@ jobs:
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
             ./codecov --file /home/circleci/project/coverage.xml
-      - save_cache:
-          paths:
-            - << pipeline.parameters.nox-envs-path >>
-            - << pipeline.parameters.poetry-hash-path >>
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            test-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
   docs:
     executor: python-executor
     steps:
@@ -103,9 +94,6 @@ jobs:
               -{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
-      - run:
-          name: Run
-          command: poetry run nox -s docs xdoctest
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
@@ -115,6 +103,9 @@ jobs:
             docs-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock" }}
+      - run:
+          name: Run
+          command: poetry run nox -s docs xdoctest
       - store_artifacts:
           path: docs/_build
   lint:
@@ -130,9 +121,6 @@ jobs:
               -{{ checksum ".pre-commit-config.yaml" }}
       - python/install-packages:
           pkg-manager: poetry
-      - run:
-          name: Run
-          command: poetry run pre-commit run --all
       - save_cache:
           paths:
             - << pipeline.parameters.venv-path >>
@@ -142,6 +130,9 @@ jobs:
             lint-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum ".pre-commit-config.yaml" }}
+      - run:
+          name: Run
+          command: poetry run pre-commit run --all
   security:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -155,9 +146,6 @@ jobs:
               -{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
-      - run:
-          name: Run
-          command: poetry run nox -- -s safety -- -i 51668 -i 51457
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
@@ -167,6 +155,9 @@ jobs:
             security-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock" }}
+      - run:
+          name: Run
+          command: poetry run nox -- -s safety -- -i 51668 -i 51457
   typing:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -181,13 +172,6 @@ jobs:
               -{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
-      - run:
-          name: Run
-          command: |
-            set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
-              circleci tests split --split-by=timings)
-            poetry run nox -- -s typeguard -- $TEST_FILES
       - save_cache:
           paths:
             - << pipeline.parameters.nox-envs-path >>
@@ -197,6 +181,13 @@ jobs:
             typing-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock" }}
+      - run:
+          name: Run
+          command: |
+            set -e
+            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
+              circleci tests split --split-by=timings)
+            poetry run nox -- -s typeguard -- $TEST_FILES
 
 workflows:
   upload-to-codecov:
