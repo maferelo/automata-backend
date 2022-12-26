@@ -35,7 +35,16 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - persist_to_workspace:
-          root: ./
+          root: .
+          paths:
+            - ./*
+  docs-v2:
+    executor: python-executor
+    steps:
+      - attach_workspace:
+          at: .
+      - persist_to_workspace:
+          root: .
           paths:
             - ./*
   docs:
