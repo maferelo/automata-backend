@@ -108,7 +108,7 @@ jobs:
       - run:
           name: Run
           command: |
-            poetry run nox -- -s coverage -- combine workspace/ 
+            poetry run nox -- -s coverage -- combine workspace/
             poetry run nox -- -s coverage -- report
             poetry run nox -- -s coverage
       - save_cache:
