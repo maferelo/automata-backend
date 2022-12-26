@@ -83,7 +83,7 @@ jobs:
           at: .
       - run:
           name: Run
-          command: nox -s coverage
+          command: poetry run nox -s coverage
       - run:
           name: Upload to codecov
           command: |
