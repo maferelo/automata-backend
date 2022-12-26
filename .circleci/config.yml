@@ -66,6 +66,7 @@ jobs:
   coverage:
     executor: python-executor
     steps:
+      - checkout
       - restore_cache:
           keys:
             - >-
