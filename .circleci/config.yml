@@ -28,35 +28,16 @@ executors:
       - image: cimg/python:<< pipeline.parameters.image-tag >> # context / project UI env-var reference
 
 jobs:
-  build:
-    executor: python-executor
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - >-
-              docs-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-      - python/install-packages:
-          pkg-manager: poetry
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./*
-      - save_cache:
-          paths:
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            docs-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
   test:
     executor: python-executor
     parallelism: 4
     steps:
-      - attach_workspace:
-          at: .
+      - restore_cache:
+          keys:
+            - >-
+              test-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock" }}
       - run:
           name: Run
           command: |
@@ -69,12 +50,27 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ./*
+            - .coverage
       - store_test_results:
           path: test-results
+      - save_cache:
+          paths:
+            - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.poetry-hash-path >>
+            - << pipeline.parameters.venv-path >>
+          key: >-
+            test-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock" }}
   coverage:
     executor: python-executor
     steps:
+      - restore_cache:
+          keys:
+            - >-
+              test-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock" }}
       - attach_workspace:
           at: .
       - run:
@@ -86,6 +82,15 @@ jobs:
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
             ./codecov --file /home/circleci/project/coverage.xml
+      - save_cache:
+          paths:
+            - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.poetry-hash-path >>
+            - << pipeline.parameters.venv-path >>
+          key: >-
+            test-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock" }}
   docs:
     executor: python-executor
     steps:
@@ -196,14 +201,9 @@ jobs:
 workflows:
   upload-to-codecov:
     jobs:
-      - build:
-          context:
-            - context
       - test:
           context:
             - context
-          requires:
-            - build
       - coverage:
           context:
             - context
