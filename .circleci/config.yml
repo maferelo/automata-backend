@@ -79,7 +79,7 @@ jobs:
           name: Run
           shell: /bin/bash
           command: |
-            poetry run nox -s coverage
+            poetry run nox -- -s coverage -- report
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
             ./codecov --file /home/circleci/project/coverage.xml
