@@ -204,7 +204,7 @@ workflows:
       - coverage:
           context:
             - context
-          required:
+          require:
             - test
       - docs:
           context:
