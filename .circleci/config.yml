@@ -77,10 +77,8 @@ jobs:
           at: .
       - run:
           name: Run
-          command: poetry run nox -s coverage
-      - run:
-          name: Upload to codecov
           command: |
+            poetry run nox -s coverage
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
             ./codecov --file /home/circleci/project/coverage.xml
