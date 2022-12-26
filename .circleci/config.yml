@@ -48,6 +48,7 @@ jobs:
             echo $TEST_FILES
             poetry run nox -- -s tests -- -m "not e2e" --cov-fail-under=0 \
               --cov-report xml:coverage.xml $TEST_FILES
+            mkdir workspace
             cp .coverage .coverage.$CIRCLE_NODE_INDEX
             ls -al
       - persist_to_workspace:
