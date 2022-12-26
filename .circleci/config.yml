@@ -32,6 +32,7 @@ jobs:
     executor: python-executor
     parallelism: 4
     steps:
+      - checkout
       - restore_cache:
           keys:
             - >-
