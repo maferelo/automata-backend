@@ -200,6 +200,11 @@ workflows:
       - build:
           context:
             - context
+      - docs-v2:
+          context:
+            - context
+          requires:
+            - build
       - docs:
           context:
             - context
