@@ -7,7 +7,7 @@ from src.app import utils
 def test_get_file_hash() -> None:
     """It returns the SHA256 hash of a file."""
     assert utils.get_file_hash("tests/data/test.txt") == (
-        "df5f5e4c517baba6abb156b2b549cecc3a0e0cc6148f66814d956d41a1675820"
+        "7a7f969187878d2fc73b1b97c4cd38467e737089dd2c4186d24ed3b20133f9ec"
     )
 
 
@@ -16,7 +16,7 @@ def test_save_file_hash() -> None:
     utils.save_file_hash("tests/data/test.txt")
     with open("tests/data/test.txt.sha256", encoding="utf-8") as file:
         assert file.read() == (
-            "df5f5e4c517baba6abb156b2b549cecc3a0e0cc6148f66814d956d41a1675820"
+            "7a7f969187878d2fc73b1b97c4cd38467e737089dd2c4186d24ed3b20133f9ec"
         )
 
 
