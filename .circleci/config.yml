@@ -50,8 +50,6 @@ jobs:
               --cov-report xml:coverage.xml $TEST_FILES
             mkdir -p workspace
             cp .coverage workspace/.coverage.$CIRCLE_NODE_INDEX
-            ls -al
-            ls -al workspace/
       - persist_to_workspace:
           root: workspace
           paths:
@@ -88,7 +86,7 @@ jobs:
           name: Run
           command: |
             poetry run nox -- -s coverage -- combine workspace/ 
-            poetry run nox -- -s coverage report
+            poetry run nox -- -s coverage -- report
             poetry run nox -- -s coverage
       - store_artifacts:
           path: htmlcov/
