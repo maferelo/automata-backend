@@ -76,13 +76,8 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Run
-          shell: /bin/bash
+          name: Upload to codecov
           command: |
-            ls -al
-            echo "cat cat cat xxxxxx"
-            cat /home/circleci/project/coverage.xml
-            poetry run nox -- -s coverage -- report
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
             ./codecov --file /home/circleci/project/coverage.xml
