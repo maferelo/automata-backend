@@ -31,6 +31,8 @@ jobs:
   build:
     executor: python-executor
     steps:
+      - attach_workspace:
+          at: .
       - checkout
       - python/install-packages:
           pkg-manager: poetry
