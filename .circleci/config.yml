@@ -25,7 +25,7 @@ parameters:
 executors:
   python-executor:
     docker:
-      - image: cimg/python:<< pipeline.parameters.image-tag >> # context / project UI env-var reference
+      - image: cimg/python:<< pipeline.parameters.image-tag >>
 
 jobs:
   test:
