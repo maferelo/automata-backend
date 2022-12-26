@@ -48,10 +48,12 @@ jobs:
             echo $TEST_FILES
             poetry run nox -- -s tests -- -m "not e2e" --cov-fail-under=0 \
               --cov-report xml:coverage.xml $TEST_FILES
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .coverage
+      - run:
+          name: Upload to codecov
+          command: |
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov --file /home/circleci/project/coverage.xml
       - store_test_results:
           path: test-results
       - save_cache:
@@ -63,24 +65,6 @@ jobs:
             test-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock" }}
-  coverage:
-    executor: python-executor
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - >-
-              test-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-      - attach_workspace:
-          at: .
-      - run:
-          name: Upload to codecov
-          command: |
-            curl -Os https://uploader.codecov.io/latest/linux/codecov
-            chmod +x codecov
-            ./codecov --file /home/circleci/project/coverage.xml
   docs:
     executor: python-executor
     steps:
@@ -194,11 +178,6 @@ workflows:
       - test:
           context:
             - context
-      - coverage:
-          context:
-            - context
-          requires:
-            - test
       - docs:
           context:
             - context
