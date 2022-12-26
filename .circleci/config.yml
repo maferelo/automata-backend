@@ -40,9 +40,6 @@ jobs:
               -{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
-      - run:
-          name: Run
-          command: ls -al
       - persist_to_workspace:
           root: .
           paths:
@@ -58,20 +55,8 @@ jobs:
     executor: python-executor
     parallelism: 4
     steps:
-      - run:
-          name: Run
-          command: ls -al
       - attach_workspace:
           at: .
-      - run:
-          name: Run
-          command: ls -al
-      - run:
-          name: Run
-          command: touch its-working.txt
-      - run:
-          name: Run
-          command: ls -al
       - run:
           name: Run
           command: |
