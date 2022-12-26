@@ -73,6 +73,21 @@ jobs:
             test-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock" }}
+  coverage:
+    executor: python-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - >-
+              test-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock" }}
+      - attach_workspace:
+          at: workspace
+      - run:
+          name: Run
+          command: poetry run nox -- -s coverage -- combine
   docs:
     executor: python-executor
     steps:
@@ -186,6 +201,11 @@ workflows:
       - test:
           context:
             - context
+      - coverage:
+          context:
+            - context
+          required:
+            - test
       - docs:
           context:
             - context
