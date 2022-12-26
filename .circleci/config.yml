@@ -51,7 +51,7 @@ jobs:
             docs-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock" }}
-  docs-v2:
+  test:
     executor: python-executor
     parallelism: 4
     steps:
@@ -66,16 +66,12 @@ jobs:
             echo $TEST_FILES
             poetry run nox -- -s tests -- -m "not e2e" --cov-fail-under=0 \
               --cov-report xml:coverage.xml $TEST_FILES
-      - run:
-          name: Upload to codecov
-          command: |
-            curl -Os https://uploader.codecov.io/latest/linux/codecov
-            chmod +x codecov
-            ./codecov --file /home/circleci/project/coverage.xml
       - persist_to_workspace:
           root: .
           paths:
             - ./*
+      - store_test_results:
+          path: test-results
   coverage:
     executor: python-executor
     steps:
@@ -166,46 +162,6 @@ jobs:
             security-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock" }}
-  test:
-    docker:
-      - image: cimg/python:<< pipeline.parameters.image-tag >>
-    parallelism: 4
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - >-
-              test-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-      - python/install-packages:
-          pkg-manager: poetry
-      - run:
-          name: Run
-          command: |
-            set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
-              circleci tests split --split-by=timings)
-            echo $TEST_FILES
-            poetry run nox -- -s tests -- -m "not e2e" --cov-fail-under=0 \
-              --cov-report xml:coverage.xml $TEST_FILES
-      - run:
-          name: Upload to codecov
-          command: |
-            curl -Os https://uploader.codecov.io/latest/linux/codecov
-            chmod +x codecov
-            ./codecov --file /home/circleci/project/coverage.xml
-      - save_cache:
-          paths:
-            - << pipeline.parameters.nox-envs-path >>
-            - << pipeline.parameters.poetry-hash-path >>
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            test-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
-      - store_test_results:
-          path: test-results
   typing:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -243,7 +199,7 @@ workflows:
       - build:
           context:
             - context
-      - docs-v2:
+      - test:
           context:
             - context
           requires:
@@ -252,7 +208,7 @@ workflows:
           context:
             - context
           requires:
-            - docs-v2
+            - test
       - docs:
           context:
             - context
@@ -260,9 +216,6 @@ workflows:
           context:
             - context
       - security:
-          context:
-            - context
-      - test:
           context:
             - context
       - typing:
