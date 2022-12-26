@@ -87,7 +87,7 @@ jobs:
           at: workspace
       - run:
           name: Run
-          command: poetry run nox -- -s coverage -- combine
+          command: rm poetry.lock.sha256 && poetry run nox -- -s coverage -- combine
   docs:
     executor: python-executor
     steps:
@@ -204,7 +204,7 @@ workflows:
       - coverage:
           context:
             - context
-          require:
+          requires:
             - test
       - docs:
           context:
