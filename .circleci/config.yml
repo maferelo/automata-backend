@@ -39,8 +39,7 @@ jobs:
           paths:
             - ./*
   docs:
-    docker:
-      - image: cimg/python:<< pipeline.parameters.image-tag >>
+    executor: python-executor
     steps:
       - checkout
       - restore_cache:
