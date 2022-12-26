@@ -79,6 +79,9 @@ jobs:
           name: Run
           shell: /bin/bash
           command: |
+            ls -al
+            echo "cat cat cat xxxxxx"
+            cat /home/circleci/project/coverage.xml
             poetry run nox -- -s coverage -- report
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
