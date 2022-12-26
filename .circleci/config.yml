@@ -91,14 +91,33 @@ jobs:
               test-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock" }}
+            - >-
+              poetry-hash-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock.sha256" }}
       - attach_workspace:
           at: workspace
+      - save_cache:
+          paths:
+            - << pipeline.parameters.nox-envs-path >>
+            - << pipeline.parameters.venv-path >>
+          key: >-
+            test-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock" }}
       - run:
           name: Run
           command: |
             poetry run nox -- -s coverage -- combine workspace/ 
             poetry run nox -- -s coverage -- report
             poetry run nox -- -s coverage
+      - save_cache:
+          paths:
+            - << pipeline.parameters.poetry-hash-path >>
+          key: >-
+            poetry-hash-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock.sha256" }}
       - store_artifacts:
           path: htmlcov/
   docs:
@@ -111,6 +130,10 @@ jobs:
               docs-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock" }}
+            - >-
+              poetry-hash-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock.sha256" }}
       - python/install-packages:
           pkg-manager: poetry
       - save_cache:
@@ -126,6 +149,13 @@ jobs:
           command: poetry run nox -s docs xdoctest
       - store_artifacts:
           path: docs/_build
+      - save_cache:
+          paths:
+            - << pipeline.parameters.poetry-hash-path >>
+          key: >-
+            poetry-hash-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock.sha256" }}
   lint:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -137,6 +167,10 @@ jobs:
               lint-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum ".pre-commit-config.yaml" }}
+            - >-
+              poetry-hash-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock.sha256" }}
       - python/install-packages:
           pkg-manager: poetry
       - save_cache:
@@ -150,6 +184,13 @@ jobs:
       - run:
           name: Run
           command: poetry run pre-commit run --all
+      - save_cache:
+          paths:
+            - << pipeline.parameters.poetry-hash-path >>
+          key: >-
+            poetry-hash-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock.sha256" }}
   security:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -161,6 +202,10 @@ jobs:
               security-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock" }}
+            - >-
+              poetry-hash-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock.sha256" }}
       - python/install-packages:
           pkg-manager: poetry
       - save_cache:
@@ -174,6 +219,13 @@ jobs:
       - run:
           name: Run
           command: poetry run nox -- -s safety -- -i 51668 -i 51457
+      - save_cache:
+          paths:
+            - << pipeline.parameters.poetry-hash-path >>
+          key: >-
+            poetry-hash-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock.sha256" }}
   typing:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -186,6 +238,10 @@ jobs:
               typing-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock" }}
+            - >-
+              poetry-hash-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock.sha256" }}
       - python/install-packages:
           pkg-manager: poetry
       - save_cache:
@@ -203,6 +259,13 @@ jobs:
             TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
               circleci tests split --split-by=timings)
             poetry run nox -- -s typeguard -- $TEST_FILES
+      - save_cache:
+          paths:
+            - << pipeline.parameters.poetry-hash-path >>
+          key: >-
+            poetry-hash-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock.sha256" }}
 
 workflows:
   upload-to-codecov:
