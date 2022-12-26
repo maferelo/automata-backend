@@ -31,9 +31,13 @@ jobs:
   build:
     executor: python-executor
     steps:
-      - attach_workspace:
-          at: .
       - checkout
+      - restore_cache:
+          keys:
+            - >-
+              docs-cache
+              -v<< pipeline.parameters.cache-version >>
+              -{{ checksum "poetry.lock" }}
       - python/install-packages:
           pkg-manager: poetry
       - run:
@@ -43,6 +47,13 @@ jobs:
           root: .
           paths:
             - ./*
+      - save_cache:
+          paths:
+            - << pipeline.parameters.venv-path >>
+          key: >-
+            docs-cache
+            -v<< pipeline.parameters.cache-version >>
+            -{{ checksum "poetry.lock" }}
   docs-v2:
     executor: python-executor
     parallelism: 4
