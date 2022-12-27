@@ -26,9 +26,3 @@ def mock_requests_get(mocker: MockFixture) -> Mock:
         "extract": "Lorem ipsum dolor sit amet",
     }
     return mock
-
-
-@pytest.fixture(name="mock_settings")
-def mock_settings(mocker: MockFixture) -> Mock:
-    """Fixture for mocking settings."""
-    return mocker.patch("src.app.config.settings")
