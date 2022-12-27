@@ -11,6 +11,12 @@ def pytest_configure(config: Config) -> None:
     config.addinivalue_line("markers", "e2e: mark as end-to-end test.")
 
 
+@pytest.fixture(name="mock_db")
+def mock_db(mocker: MockFixture) -> Mock:
+    """Fixture for mocking settings."""
+    return mocker.patch("src.app.db.database")
+
+
 @pytest.fixture(name="_mock_requests_get")
 def mock_requests_get(mocker: MockFixture) -> Mock:
     """Fixture for mocking requests.get."""
@@ -20,3 +26,9 @@ def mock_requests_get(mocker: MockFixture) -> Mock:
         "extract": "Lorem ipsum dolor sit amet",
     }
     return mock
+
+
+@pytest.fixture(name="mock_settings")
+def mock_settings(mocker: MockFixture) -> Mock:
+    """Fixture for mocking settings."""
+    return mocker.patch("src.app.config.settings")

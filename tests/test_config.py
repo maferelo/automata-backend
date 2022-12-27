@@ -1,9 +1,9 @@
 """Tests for the config module."""
-from pydantic import BaseSettings
+from unittest.mock import Mock
 
 from src.app import config
 
 
-def test_settings() -> None:
+def test_settings(mock_settings: Mock) -> None:
     """It returns the application settings."""
-    assert isinstance(config.settings, BaseSettings)
+    assert mock_settings == config.settings
