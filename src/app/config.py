@@ -13,7 +13,7 @@ class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
     telegram_token: str = Field(..., env="TELEGRAM_TOKEN")
 
 
-def get_settings() -> Settings:
+def get_settings():
     """Get application settings."""
     application_settings = Settings()
 
