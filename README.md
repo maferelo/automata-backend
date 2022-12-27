@@ -85,7 +85,16 @@ nox -s tests -- -m e2e
 
 ## Deployments
 
-Using [Heroku](https://python-poetry.org/)
+Using [Heroku](https://python-poetry.org/) Create staging and production apps
+
+```bash
+heroku apps create automata-backend
+heroku stack:set -a automata-backend heroku-20
+heroku buildpacks:add -a automata-backend \
+  https://github.com/moneymeets/python-poetry-buildpack.git
+heroku buildpacks:add -a automata-backend heroku/python
+heroku config:set POETRY_VERSION=1.3.1
+```
 
 ```bash
 heroku login
