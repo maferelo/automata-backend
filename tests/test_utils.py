@@ -22,6 +22,7 @@ def test_save_file_hash() -> None:
 
 def test_validate_file_hash() -> None:
     """It validates the SHA256 hash of a file."""
+    print("Saving hash...test_validate_file_hash")
     utils.save_file_hash(TEST_FILE_TO_HASH_PATH)
     assert utils.validate_file_hash(TEST_FILE_TO_HASH_PATH) is True
 
