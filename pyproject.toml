@@ -67,7 +67,8 @@ xdoctest = "^1.1.0"
 pytest-xdist = "^3.1.0"
 
 [tool.poetry.scripts]
-app = "src.app.console:main"
+wiki = "src.app.console:main"
+
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

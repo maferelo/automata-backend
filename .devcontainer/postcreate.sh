@@ -8,6 +8,8 @@ git config --global --add safe.directory /app
 
 poetry run pre-commit install --install-hooks
 
+gunicorn website.main:app -w 4 -k uvicorn.workers.UvicornWorker
+
 #poetry run alembic upgrade head
 
 #poetry run pre-commit run -a

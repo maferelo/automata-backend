@@ -37,12 +37,13 @@ We use [remote containers](https://code.visualstudio.com/docs/remote/containers-
 Inside the container run:
 
 ```bash
-poetry run app
+poetry run wiki
 ```
 
 Check the endpoint
 
 ```bash
+run
 curl --location --request GET 'http://localhost:8000/'
 ```
 
