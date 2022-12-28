@@ -6,15 +6,15 @@ Reference
    :backlinks: none
 
 
-app.console
+src.app.console
 --------------------------
 
-.. automodule:: app.console
+.. automodule:: src.app.console
    :members:
 
 
-app.wikipedia
+src.app.wikipedia
 ----------------------------
 
-.. automodule:: app.wikipedia
+.. automodule:: src.app.wikipedia
    :members:
