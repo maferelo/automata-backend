@@ -40,7 +40,7 @@ jobs:
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock" }}
             - >-
-              poetry-hash-cache
+              test-poetry-hash-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock.sha256" }}
       - run:
@@ -78,7 +78,7 @@ jobs:
           paths:
             - << pipeline.parameters.poetry-hash-path >>
           key: >-
-            poetry-hash-cache
+            test-poetry-hash-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock.sha256" }}
   coverage:
@@ -92,7 +92,7 @@ jobs:
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock" }}
             - >-
-              poetry-hash-cache
+              coverage-poetry-hash-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock.sha256" }}
       - attach_workspace:
@@ -115,7 +115,7 @@ jobs:
           paths:
             - << pipeline.parameters.poetry-hash-path >>
           key: >-
-            poetry-hash-cache
+            coverage-poetry-hash-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock.sha256" }}
       - store_artifacts:
@@ -131,7 +131,7 @@ jobs:
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock" }}
             - >-
-              poetry-hash-cache
+              coverage-poetry-hash-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock.sha256" }}
       - python/install-packages:
@@ -153,7 +153,7 @@ jobs:
           paths:
             - << pipeline.parameters.poetry-hash-path >>
           key: >-
-            poetry-hash-cache
+            coverage-poetry-hash-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock.sha256" }}
   lint:
@@ -168,7 +168,7 @@ jobs:
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum ".pre-commit-config.yaml" }}
             - >-
-              poetry-hash-cache
+              lint-poetry-hash-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock.sha256" }}
       - python/install-packages:
@@ -188,7 +188,7 @@ jobs:
           paths:
             - << pipeline.parameters.poetry-hash-path >>
           key: >-
-            poetry-hash-cache
+            lint-poetry-hash-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock.sha256" }}
   security:
@@ -203,7 +203,7 @@ jobs:
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock" }}
             - >-
-              poetry-hash-cache
+              security-poetry-hash-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock.sha256" }}
       - python/install-packages:
@@ -223,7 +223,7 @@ jobs:
           paths:
             - << pipeline.parameters.poetry-hash-path >>
           key: >-
-            poetry-hash-cache
+            security-poetry-hash-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock.sha256" }}
   typing:
@@ -239,7 +239,7 @@ jobs:
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock" }}
             - >-
-              poetry-hash-cache
+              typing-poetry-hash-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock.sha256" }}
       - python/install-packages:
@@ -263,7 +263,7 @@ jobs:
           paths:
             - << pipeline.parameters.poetry-hash-path >>
           key: >-
-            poetry-hash-cache
+            typing-poetry-hash-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock.sha256" }}
 
