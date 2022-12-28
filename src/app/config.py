@@ -3,7 +3,7 @@ from pydantic import BaseSettings
 from pydantic import Field
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
     """Application settings."""
 
     db_url: str = Field(..., env="DATABASE_URL")
@@ -13,6 +13,16 @@ class Settings(BaseSettings):
     telegram_token: str = Field(..., env="TELEGRAM_TOKEN")
 
 
-settings = Settings()
-# Required for postgres Heroku deprecated postgres naming
-settings.db_url = settings.db_url.replace("postgres://", "postgresql://", 1)
+def get_settings():
+    """Get application settings."""
+    application_settings = Settings()
+
+    # Required for postgres Heroku deprecated postgres naming
+    application_settings.db_url = application_settings.db_url.replace(
+        "postgres://", "postgresql://", 1
+    )
+
+    return application_settings
+
+
+settings = get_settings()

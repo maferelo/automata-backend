@@ -9,17 +9,19 @@ database = databases.Database(settings.db_url)
 metadata = sqlalchemy.MetaData()
 
 
-class BaseMeta(ormar.ModelMeta):
+class BaseMeta(
+    ormar.ModelMeta
+):  # pylint: disable=too-few-public-methods, too-many-ancestors
     """Base metadata for all models."""
 
     metadata = metadata
     database = database
 
 
-class User(ormar.Model):
+class User(ormar.Model):  # pylint: disable=too-few-public-methods, too-many-ancestors
     """User model."""
 
-    class Meta(BaseMeta):
+    class Meta(BaseMeta):  # pylint: disable=too-few-public-methods
         """Meta class.""" ""
 
         tablename = "users"
@@ -29,10 +31,12 @@ class User(ormar.Model):
     active: bool = ormar.Boolean(default=True, nullable=False)
 
 
-class Readers(ormar.Model):
+class Readers(
+    ormar.Model
+):  # pylint: disable=too-few-public-methods, too-many-ancestors
     """Readers model."""
 
-    class Meta(BaseMeta):
+    class Meta(BaseMeta):  # pylint: disable=too-few-public-methods
         """Meta class."""
 
         tablename = "readers"
@@ -43,10 +47,10 @@ class Readers(ormar.Model):
     email: str = ormar.String(max_length=128, unique=True, nullable=False)
 
 
-class Books(ormar.Model):
+class Books(ormar.Model):  # pylint: disable=too-few-public-methods, too-many-ancestors
     """Books model."""
 
-    class Meta(BaseMeta):
+    class Meta(BaseMeta):  # pylint: disable=too-few-public-methods
         """Meta class."""
 
         tablename = "books"
@@ -56,10 +60,12 @@ class Books(ormar.Model):
     author: str = ormar.String(max_length=128, unique=False, nullable=False)
 
 
-class BooksReaders(ormar.Model):
+class BooksReaders(
+    ormar.Model
+):  # pylint: disable=too-few-public-methods, too-many-ancestors
     """BooksReaders model."""
 
-    class Meta(BaseMeta):
+    class Meta(BaseMeta):  # pylint: disable=too-few-public-methods
         """Meta class."""
 
         tablename = "books_readers"

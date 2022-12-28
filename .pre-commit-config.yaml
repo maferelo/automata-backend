@@ -4,7 +4,7 @@ repos:
   - hooks:
       - args:
           - --branch
-          - master
+          - main
         id: no-commit-to-branch
       - id: check-added-large-files
       - id: check-ast

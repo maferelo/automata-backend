@@ -3,7 +3,8 @@
 > Personal scripts for automation of everyday tasks
 > using best practices with reference notes.
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/maferelo/automata-backend/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/maferelo/automata-backend/tree/main)
+[![codecov](https://codecov.io/gh/maferelo/automata-backend/branch/develop/graph/badge.svg?token=GWW6DXXDZO)](https://codecov.io/gh/maferelo/automata-backend)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/maferelo/automata-backend/tree/develop.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/maferelo/automata-backend/tree/main)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -23,18 +24,6 @@ cd automata
 
 ```bash
 bash scripts/prestart-mac.sh
-```
-
-### For RaspberryPi
-
-- [Docker](https://www.docker.com/)
-- [ex-fuse](https://packages.debian.org/source/buster/fuse-exfat)
-- [Pyenv](https://github.com/pyenv/pyenv)
-- [Python3.8.13](https://www.python.org/)
-
-```bash
-ssh pi@192.168.1.3
-sudo bash scripts/prestart-rpi.sh
 ```
 
 ## Development
@@ -94,39 +83,24 @@ End to end testing
 nox -s tests -- -m e2e
 ```
 
-## Raspberry
-
-```bash
-docker compose -f docker-compose.rpi.yml up
-```
-
 ## Deployments
 
-Using [Heroku](https://python-poetry.org/)
+Using [Heroku](https://python-poetry.org/) Create staging and production apps
+
+```bash
+heroku apps create automata-backend
+heroku stack:set -a automata-backend heroku-20
+heroku buildpacks:add -a automata-backend \
+  https://github.com/moneymeets/python-poetry-buildpack.git
+heroku buildpacks:add -a automata-backend heroku/python
+heroku config:set POETRY_VERSION=1.3.1
+```
 
 ```bash
 heroku login
 git push heroku main
 heroku open
 heroku logs --tail
-```
-
-## Usage RaspberryPi app
-
-### Features
-
-- reset_jobs: Set the scripts to run consecutive by day of month.
-
-### Scripts
-
-- update: Update the rpi
-- cleanup: Clean after reboot from update
-- backup: Clone rpi to hdd
-
-### Runnning the app
-
-```bash
-sudo bash scripts/prestart-rpi.sh
 ```
 
 ## References
