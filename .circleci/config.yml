@@ -258,7 +258,7 @@ jobs:
             set -e
             TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
               circleci tests split --split-by=timings)
-            poetry run nox -- -s typeguard -- $TEST_FILES
+            poetry run nox -- -s typeguard -- -v $TEST_FILES
       - save_cache:
           paths:
             - << pipeline.parameters.poetry-hash-path >>
