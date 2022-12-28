@@ -5,6 +5,8 @@ import pytest
 from _pytest.config import Config
 from pytest_mock import MockFixture
 
+TO_HASH_FILE_PATH = "tests/data/test.txt"
+
 
 def pytest_configure(config: Config) -> None:
     """Pytest configuration hook."""
