@@ -12,7 +12,7 @@ try:
     IS_ENV_UPDATED = validate_file_hash("poetry.lock")
 except FileNotFoundError:
     save_file_hash("poetry.lock")
-    IS_ENV_UPDATED = True
+    IS_ENV_UPDATED = False
 nox.options.sessions = ("docs", "tests", "typeguard", "xdoctest", "safety", "coverage")
 
 
