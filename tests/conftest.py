@@ -28,3 +28,16 @@ def mock_requests_get(mocker: MockFixture) -> Mock:
         "extract": "Lorem ipsum dolor sit amet",
     }
     return mock
+
+
+@pytest.fixture(name="mock_file_open")
+def mock_file_open(mocker: MockFixture) -> Mock:
+    """Fixture for mocking open."""
+    mocked_hash_data = mocker.mock_open(read_data="hash")
+    return mocker.patch("builtins.open", mocked_hash_data)
+
+
+@pytest.fixture(name="mock_get_file_hash")
+def mock_get_file_hash(mocker: MockFixture) -> Mock:
+    """Fixture for mocking utils.get_file_hash."""
+    return mocker.patch("src.app.utils.get_file_hash", return_value="hash")

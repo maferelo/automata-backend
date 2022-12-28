@@ -20,10 +20,9 @@ def test_save_file_hash() -> None:
         assert file_hash == TEST_FILE_HASH
 
 
+@pytest.mark.usefixtures("mock_get_file_hash", "mock_file_open")
 def test_validate_file_hash() -> None:
     """It validates the SHA256 hash of a file."""
-    print("Saving hash...test_validate_file_hash")
-    utils.save_file_hash(TEST_FILE_TO_HASH_PATH)
     assert utils.validate_file_hash(TEST_FILE_TO_HASH_PATH) is True
 
 
