@@ -4,11 +4,15 @@ from typing import Any
 
 import nox
 
+from app.utils import save_file_hash
 from app.utils import validate_file_hash
 
 MODULE_PATH = "src/"
-IS_ENV_UPDATED = validate_file_hash("poetry.lock")
-print(f"IS_ENV_UPDATED: {IS_ENV_UPDATED}")
+try:
+    IS_ENV_UPDATED = validate_file_hash("poetry.lock")
+except FileNotFoundError:
+    save_file_hash("poetry.lock")
+    IS_ENV_UPDATED = True
 nox.options.sessions = ("docs", "tests", "typeguard", "xdoctest", "safety", "coverage")
 
 
