@@ -43,6 +43,8 @@ jobs:
               test-poetry-hash-cache
               -v<< pipeline.parameters.cache-version >>
               -{{ checksum "poetry.lock.sha256" }}
+      - python/install-packages:
+          pkg-manager: poetry
       - run:
           name: Run
           command: |
