@@ -22,4 +22,5 @@ def validate_file_hash(file_path: str) -> bool:
         expected_hash = file.read()
     print(f"Expected hash: {expected_hash}")
     print(f"Actual hash: {get_file_hash(file_path)}")
+    print(f"Expected hash == Actual hash: {expected_hash == get_file_hash(file_path)}")
     return expected_hash == get_file_hash(file_path)
