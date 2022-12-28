@@ -22,10 +22,11 @@ def test_save_file_hash() -> None:
 
 def test_validate_file_hash() -> None:
     """It validates the SHA256 hash of a file."""
+    utils.save_file_hash("tests/data/test.txt")
     assert utils.validate_file_hash("tests/data/test.txt") is True
 
 
 def test_validate_file_hash_fails() -> None:
-    """It fails to validate the SHA256 hash of a path that does not exist."""
+    """It fails to validate the SHA256 hash of a file that does not exist."""
     with pytest.raises(FileNotFoundError):
         assert utils.validate_file_hash("tests/data/does-not-exist.txt") is False
