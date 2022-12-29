@@ -2,11 +2,11 @@
 from fastapi import FastAPI
 from fastapi import Request
 
-from app.db import Books
-from app.db import BooksReaders
-from app.db import Readers
-from app.db import User
-from app.db import database
+from src.app.db import Books
+from src.app.db import BooksReaders
+from src.app.db import Readers
+from src.app.db import User
+from src.app.db import database
 
 app = FastAPI(title="Automata")
 

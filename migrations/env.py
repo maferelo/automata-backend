@@ -1,17 +1,18 @@
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import engine_from_config
+from sqlalchemy import pool
 
-from app.config import settings
-from app.db import metadata
+from src.app.config import settings
+from src.app.db import metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option('sqlalchemy.url', settings.db_url)
-config.set_main_option('pool_size', str(settings.db_engine_pool_size))
-config.set_main_option('max_overflow', str(settings.db_engine_max_overflow))
+config.set_main_option("sqlalchemy.url", settings.db_url)
+config.set_main_option("pool_size", str(settings.db_engine_pool_size))
+config.set_main_option("max_overflow", str(settings.db_engine_max_overflow))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -49,7 +50,7 @@ def run_migrations_offline() -> None:
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
         pool_size=settings.db_engine_pool_size,
-        pool_max_overflow=settings.db_engine_max_overflow
+        pool_max_overflow=settings.db_engine_max_overflow,
     )
 
     with context.begin_transaction():
@@ -70,9 +71,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
