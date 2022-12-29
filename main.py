@@ -22,7 +22,6 @@ async def startup():
     """Connect to database."""
     if not database.is_connected:
         await database.connect()
-    await User.objects.get_or_create(email="test@test.com")
 
 
 @app.on_event("shutdown")

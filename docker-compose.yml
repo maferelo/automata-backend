@@ -34,7 +34,7 @@ services:
     healthcheck:
       interval: 10s
       retries: 5
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
       timeout: 5s
     image: ${DB_IMAGE:-postgres:14.4-bullseye}
     init: true
