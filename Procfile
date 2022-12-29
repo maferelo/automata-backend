@@ -1,1 +1,1 @@
-web: gunicorn website.main:app -w 4 -k uvicorn.workers.UvicornWorker
+web: gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --access-logfile -
