@@ -95,6 +95,7 @@ heroku buildpacks:add -a automata-backend \
   https://github.com/moneymeets/python-poetry-buildpack.git
 heroku buildpacks:add -a automata-backend heroku/python
 heroku config:set POETRY_VERSION=1.3.1
+heroku addons:create heroku-postgresql:mini
 ```
 
 ```bash
