@@ -192,11 +192,8 @@ jobs:
           command: >-
             docker compose run app bash -ic
             "sudo chown -R vscode:vscode . && poetry run nox --session docs"
-      - run:
-          name: Run
-          command: >-
-            docker compose run app bash -ic
-            "ls -al docs/"
+      - store_artifacts:
+          path: docs/_build
 
   security:
     docker:
