@@ -191,7 +191,7 @@ jobs:
           name: Run
           command: >-
             docker compose run app bash -ic
-            "sudo chown -R vscode:vscode . && poetry run nox && ls -al"
+            "sudo chown -R vscode:vscode . && poetry run nox --session docs"
       - run:
           name: Run
           command: >-
