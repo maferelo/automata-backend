@@ -1,31 +1,17 @@
 ---
+# .circleci/.config.yml reference:
+# https://circleci.com/docs/configuration-reference/
+# YAML 1.2 spec: https://yaml.org/spec/1.2-old/spec.html
+# Reusable config: https://circleci.com/docs/reusing-config/
+# Multiline comnads:
+# https://stackoverflow.com/questions/3790454
 version: 2.1
 
+# Image: https://circleci.com/developer/machine/image/ubuntu-2204
 orbs:
   codecov: codecov/codecov@3.2.4
-  python: circleci/python@1.5.0
-
-parameters:
-  cache-version:
-    type: integer
-    default: 4
-  image-tag:
-    type: string
-    default: 3.8.16
-  poetry-hash-path:
-    type: string
-    default: /home/circleci/project/poetry.lock.sha256
-  nox-envs-path:
-    type: string
-    default: /home/circleci/project/.nox
-  venv-path:
-    type: string
-    default: /home/circleci/project/.venv
 
 executors:
-  python-executor:
-    docker:
-      - image: cimg/python:<< pipeline.parameters.image-tag >>
   ubuntu-executor:
     machine:
       image: ubuntu-2204:2022.10.2
@@ -50,10 +36,9 @@ jobs:
               --env TEST_FILES="$(circleci tests glob "tests/**/test_*.py" | \
                 circleci tests split --split-by=timings)" \
               app bash -ic \
-                "sudo chown -R vscode:vscode . \
-                  && poetry run nox \
-                    -- -s tests -- -m 'not e2e' --cov-fail-under=0 \
-                    --cov-report xml:coverage.xml $TEST_FILES"
+                "sudo chown -R vscode:vscode . && poetry run \
+                  nox -- -s tests -- -m 'not e2e' --cov-fail-under=0 \
+                  --cov-report xml:coverage.xml $TEST_FILES"
             mkdir -p workspace
             cp .coverage workspace/.coverage.$CIRCLE_NODE_INDEX
       - persist_to_workspace:
@@ -68,43 +53,26 @@ jobs:
             ./codecov --file /home/circleci/project/coverage.xml
       - store_test_results:
           path: test-results
-  coverage:
-    executor: python-executor
+  Coverage:
+    executor: ubuntu-executor
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - >-
-              test-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-            - >-
-              coverage-poetry-hash-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock.sha256" }}
       - attach_workspace:
           at: workspace
-      - save_cache:
-          paths:
-            - << pipeline.parameters.nox-envs-path >>
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            test-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
+      - run:
+          name: Set .env
+          command: cp .env.example .env
+      - run:
+          name: Build image
+          command: docker compose build
       - run:
           name: Run
-          command: |
-            poetry run nox -- -s coverage -- combine workspace/
-            poetry run nox -- -s coverage -- report
-            poetry run nox -- -s coverage
-      - save_cache:
-          paths:
-            - << pipeline.parameters.poetry-hash-path >>
-          key: >-
-            coverage-poetry-hash-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock.sha256" }}
+          command: >-
+            docker compose run app bash -ic
+            "sudo chown -R vscode:vscode . &&
+            poetry run nox -- -s coverage -- combine workspace/ &&
+            poetry run nox -- -s coverage -- report &&
+            poetry run nox -- -s coverage"
       - store_artifacts:
           path: htmlcov/
   Docs:
@@ -200,7 +168,7 @@ workflows:
       - Test:
           context:
             - context
-      - coverage:
+      - Coverage:
           context:
             - context
           requires:
