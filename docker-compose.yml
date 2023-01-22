@@ -1,7 +1,14 @@
 ---
 version: "3.8"
+x-app: &default-app
+  build:
+    dockerfile: Dockerfile
+  restart: ${DOCKER_RESTART_POLICY:-unless-stopped}
+  tty: true
+
 services:
   app:
+    <<: *default-app
     build:
       args:
         IMAGE_VARIANT: ${DEV_CONTAINER_IMAGE_VARIANT:-3.8-bullseye}
@@ -14,5 +21,21 @@ services:
       - ~/.bash_history:/home/vscode/.bash_history:cache
       - extensions-cache:/home/vscode/.vscode-server/extensions:cache
 
+  postgres:
+    env_file:
+      - .env
+    healthcheck:
+      interval: 10s
+      retries: 5
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      timeout: 5s
+    image: ${DB_IMAGE:-postgres:14.4-bullseye}
+    init: true
+    ports:
+      - 5432:5432
+    restart: ${DOCKER_RESTART_POLICY:-unless-stopped}
+    stop_grace_period: 3s
+
 volumes:
   extensions-cache:
+  postgres:
