@@ -188,7 +188,7 @@ jobs:
       - run:
           name: Run
           command: |
-            export TEST_FILES="$(circleci tests glob "tests/**/test_*.py" | \
+            set -e TEST_FILES="$(circleci tests glob "tests/**/test_*.py" | \
               circleci tests split --split-by=timings)"
             printenv
       - run:
