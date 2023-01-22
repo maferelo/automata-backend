@@ -27,9 +27,6 @@ RUN \
 
 FROM ${IMAGE}
 
-COPY scripts/postcreate.sh /postcreate.sh
-RUN chmod +x /postcreate.sh
-
 RUN addgroup --system app && adduser --system --group app
 
 USER app
