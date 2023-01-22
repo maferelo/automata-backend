@@ -177,6 +177,22 @@ jobs:
           command: >-
             docker compose run app bash -ic
             "sudo chown -R vscode:vscode . && poetry run pre-commit run -a"
+  Nox:
+    executor: ubuntu-executor
+    steps:
+      - checkout
+      - run:
+          name: Set .env
+          command: cp .env.example .env
+      - run:
+          name: Build image
+          command: docker compose build
+      - run:
+          name: Run
+          command: >-
+            docker compose run app bash -ic
+            "sudo chown -R vscode:vscode . && poetry run nox && ls -al"
+
   security:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -267,6 +283,9 @@ workflows:
           context:
             - context
       - Lint:
+          context:
+            - context
+      - Nox:
           context:
             - context
       - security:
