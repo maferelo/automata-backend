@@ -189,7 +189,7 @@ jobs:
           name: Run
           command: |
             docker compose run --env TEST_FILES="$(circleci tests glob "tests/**/test_*.py" | \
-              circleci tests split --split-by=timings)" app bash -ic "poetry run nox -- -s safety -- -i 51668 -i 51457" 
+              circleci tests split --split-by=timings)" app bash -ic "poetry run nox -- -s typeguard -- -v $TEST_FILES" 
   typing:
     executor: python-executor
     parallelism: 4
