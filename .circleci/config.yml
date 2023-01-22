@@ -285,7 +285,7 @@ jobs:
           name: Run
           command: >-
             docker compose run app bash -ic
-            "sudo chown -R vscode:vscode . && pre-commit run -a"
+            "pre-commit run -a"
 
 workflows:
   upload-to-codecov:
