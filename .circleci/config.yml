@@ -189,8 +189,8 @@ jobs:
           name: Run
           command: |
             set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
-              circleci tests split --split-by=timings)
+            TEST_FILES="$(circleci tests glob "tests/**/test_*.py" | \
+              circleci tests split --split-by=timings)"
             docker compose run --env TEST_FILES=$TEST_FILES app bash -ic "printenv"  
       - run:
           name: Run
