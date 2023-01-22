@@ -196,7 +196,7 @@ jobs:
           name: Run
           command: >-
             docker compose run app bash -ic
-            "ls -al"
+            "ls -al docs/"
 
   security:
     docker:
