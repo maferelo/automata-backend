@@ -174,41 +174,6 @@ jobs:
             docker compose run app bash -ic
             "sudo chown -R vscode:vscode . 
             && poetry run nox -- -s safety -- -i 51668 -i 51457"
-  security:
-    docker:
-      - image: cimg/python:<< pipeline.parameters.image-tag >>
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - >-
-              security-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-            - >-
-              security-poetry-hash-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock.sha256" }}
-      - python/install-packages:
-          pkg-manager: poetry
-      - save_cache:
-          paths:
-            - << pipeline.parameters.nox-envs-path >>
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            security-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
-      - run:
-          name: Run
-          command: poetry run nox -- -s safety -- -i 51668 -i 51457
-      - save_cache:
-          paths:
-            - << pipeline.parameters.poetry-hash-path >>
-          key: >-
-            security-poetry-hash-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock.sha256" }}
   typing:
     executor: python-executor
     parallelism: 4
@@ -264,9 +229,6 @@ workflows:
           context:
             - context
       - Lint:
-          context:
-            - context
-      - security:
           context:
             - context
       - Security:
