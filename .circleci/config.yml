@@ -172,7 +172,7 @@ jobs:
           name: Run
           command: >-
             docker compose run app bash -ic
-            "sudo chown -R vscode:vscode . && poetry run nox safety -i 51668 -i 51457"
+            "sudo chown -R vscode:vscode . && poetry run nox -s safety -i 51668 -i 51457"
   security:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
