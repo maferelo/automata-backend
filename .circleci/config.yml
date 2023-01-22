@@ -280,7 +280,7 @@ jobs:
           command: cp .env.example .env
       - run:
           name: Build image
-          command: cd .devcontainer/ && docker compose build
+          command: ls -al && cd .devcontainer/ && docker compose build
       - run:
           name: Run
           command: >-
