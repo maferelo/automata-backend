@@ -26,6 +26,10 @@ executors:
   python-executor:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
+  ubuntu-executor:
+    machine:
+      image: ubuntu-2204:2022.10.2
+      docker_layer_caching: true
 
 jobs:
   test:
@@ -158,41 +162,21 @@ jobs:
             coverage-poetry-hash-cache
             -v<< pipeline.parameters.cache-version >>
             -{{ checksum "poetry.lock.sha256" }}
-  lint:
-    docker:
-      - image: cimg/python:<< pipeline.parameters.image-tag >>
+  Lint:
+    executor: ubuntu-executor
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - >-
-              lint-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum ".pre-commit-config.yaml" }}
-            - >-
-              lint-poetry-hash-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock.sha256" }}
-      - python/install-packages:
-          pkg-manager: poetry
-      - save_cache:
-          paths:
-            - << pipeline.parameters.venv-path >>
-            - ~/.cache/pre-commit
-          key: >-
-            lint-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum ".pre-commit-config.yaml" }}
+      - run:
+          name: Set .env
+          command: cp .env.example .env
+      - run:
+          name: Build image
+          command: docker compose build
       - run:
           name: Run
-          command: poetry run pre-commit run --all
-      - save_cache:
-          paths:
-            - << pipeline.parameters.poetry-hash-path >>
-          key: >-
-            lint-poetry-hash-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock.sha256" }}
+          command: >-
+            docker compose run app bash -ic
+            "sudo chown -R vscode:vscode . && poetry run pre-commit run -a"
   security:
     docker:
       - image: cimg/python:<< pipeline.parameters.image-tag >>
@@ -282,7 +266,7 @@ workflows:
       - docs:
           context:
             - context
-      - lint:
+      - Lint:
           context:
             - context
       - security:
