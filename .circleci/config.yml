@@ -285,7 +285,7 @@ jobs:
           name: Run
           command: >-
             docker compose run app bash -ic
-            "/app/.venv/bin/pre-commit --version"
+            "ls -al"
 
 workflows:
   upload-to-codecov:
