@@ -83,7 +83,10 @@ jobs:
           name: Run
           command: >-
             docker compose run app bash -ic
-            "sudo chown -R vscode:vscode . && poetry run nox -- -s coverage -- combine workspace/"
+            "sudo chown -R vscode:vscode . && 
+            poetry run nox -- -s coverage -- combine workspace/ &&
+            poetry run nox -- -s coverage -- report
+            poetry run nox -- -s coverage"
       - store_artifacts:
           path: htmlcov/
   coverage:
