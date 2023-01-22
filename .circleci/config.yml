@@ -218,6 +218,11 @@ workflows:
       - Test:
           context:
             - context
+      - Coverage:
+          context:
+            - context
+          requires:
+            - Test
       - coverage:
           context:
             - context
