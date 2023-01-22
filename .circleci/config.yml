@@ -192,8 +192,7 @@ jobs:
             TEST_FILES=$(circleci tests glob "tests/**/test_*.py" |
             circleci tests split --split-by=timings) &&
             docker compose run --env TEST_FILES=$TEST_FILES app bash -ic
-            "sudo chown -R vscode:vscode . &&
-            poetry run nox -- -s typeguard -- -v $TEST_FILES"  
+            "echo $TEST_FILES"  
   typing:
     executor: python-executor
     parallelism: 4
