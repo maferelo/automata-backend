@@ -126,42 +126,23 @@ jobs:
             -{{ checksum "poetry.lock.sha256" }}
       - store_artifacts:
           path: htmlcov/
-  docs:
-    executor: python-executor
+  Docs:
+    executor: ubuntu-executor
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - >-
-              docs-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-            - >-
-              coverage-poetry-hash-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock.sha256" }}
-      - python/install-packages:
-          pkg-manager: poetry
-      - save_cache:
-          paths:
-            - << pipeline.parameters.nox-envs-path >>
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            docs-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
+      - run:
+          name: Set .env
+          command: cp .env.example .env
+      - run:
+          name: Build image
+          command: docker compose build
       - run:
           name: Run
-          command: poetry run nox -s docs xdoctest
+          command: >-
+            docker compose run app bash -ic
+            "sudo chown -R vscode:vscode . && poetry run nox --session docs"
       - store_artifacts:
           path: docs/_build
-      - save_cache:
-          paths:
-            - << pipeline.parameters.poetry-hash-path >>
-          key: >-
-            coverage-poetry-hash-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock.sha256" }}
   Lint:
     executor: ubuntu-executor
     steps:
@@ -177,41 +158,22 @@ jobs:
           command: >-
             docker compose run app bash -ic
             "sudo chown -R vscode:vscode . && poetry run pre-commit run -a"
-  security:
-    docker:
-      - image: cimg/python:<< pipeline.parameters.image-tag >>
+  Security:
+    executor: ubuntu-executor
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - >-
-              security-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-            - >-
-              security-poetry-hash-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock.sha256" }}
-      - python/install-packages:
-          pkg-manager: poetry
-      - save_cache:
-          paths:
-            - << pipeline.parameters.nox-envs-path >>
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            security-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
+      - run:
+          name: Set .env
+          command: cp .env.example .env
+      - run:
+          name: Build image
+          command: docker compose build
       - run:
           name: Run
-          command: poetry run nox -- -s safety -- -i 51668 -i 51457
-      - save_cache:
-          paths:
-            - << pipeline.parameters.poetry-hash-path >>
-          key: >-
-            security-poetry-hash-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock.sha256" }}
+          command: >-
+            docker compose run app bash -ic
+            "sudo chown -R vscode:vscode .
+            && poetry run nox -- -s safety -- -i 51668 -i 51457"
   typing:
     executor: python-executor
     parallelism: 4
@@ -263,13 +225,13 @@ workflows:
             - context
           requires:
             - test
-      - docs:
+      - Docs:
           context:
             - context
       - Lint:
           context:
             - context
-      - security:
+      - Security:
           context:
             - context
       - typing:
