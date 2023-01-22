@@ -6,21 +6,9 @@ orbs:
   python: circleci/python@1.5.0
 
 parameters:
-  cache-version:
-    type: integer
-    default: 4
   image-tag:
     type: string
     default: 3.8.16
-  poetry-hash-path:
-    type: string
-    default: /home/circleci/project/poetry.lock.sha256
-  nox-envs-path:
-    type: string
-    default: /home/circleci/project/.nox
-  venv-path:
-    type: string
-    default: /home/circleci/project/.venv
 
 executors:
   python-executor:
@@ -85,47 +73,8 @@ jobs:
             docker compose run app bash -ic
             "sudo chown -R vscode:vscode . && 
             poetry run nox -- -s coverage -- combine workspace/ &&
-            poetry run nox -- -s coverage -- report
+            poetry run nox -- -s coverage -- report &&
             poetry run nox -- -s coverage"
-      - store_artifacts:
-          path: htmlcov/
-  coverage:
-    executor: python-executor
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - >-
-              test-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-            - >-
-              coverage-poetry-hash-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock.sha256" }}
-      - attach_workspace:
-          at: workspace
-      - save_cache:
-          paths:
-            - << pipeline.parameters.nox-envs-path >>
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            test-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
-      - run:
-          name: Run
-          command: |
-            poetry run nox -- -s coverage -- combine workspace/
-            poetry run nox -- -s coverage -- report
-            poetry run nox -- -s coverage
-      - save_cache:
-          paths:
-            - << pipeline.parameters.poetry-hash-path >>
-          key: >-
-            coverage-poetry-hash-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock.sha256" }}
       - store_artifacts:
           path: htmlcov/
   Docs:
@@ -222,11 +171,6 @@ workflows:
           context:
             - context
       - Coverage:
-          context:
-            - context
-          requires:
-            - Test
-      - coverage:
           context:
             - context
           requires:
