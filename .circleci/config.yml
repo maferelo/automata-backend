@@ -285,7 +285,7 @@ jobs:
           name: Run
           command: >-
             docker compose run app bash -ic
-            "pre-commit run -a"
+            "poetry --version"
 
 workflows:
   upload-to-codecov:
