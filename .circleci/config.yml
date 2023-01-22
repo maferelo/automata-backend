@@ -193,7 +193,9 @@ jobs:
                 circleci tests split --split-by=timings)" \
               app bash -ic \
                 "sudo chown -R vscode:vscode . \
-                  && poetry run nox -- -s typeguard -- -v $TEST_FILES" 
+                  && poetry run nox -- -s typeguard -- $TEST_FILES" 
+      - store_test_results:
+          path: test-results
 
 workflows:
   upload-to-codecov:
