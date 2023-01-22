@@ -174,45 +174,28 @@ jobs:
             docker compose run app bash -ic
             "sudo chown -R vscode:vscode .
             && poetry run nox -- -s safety -- -i 51668 -i 51457"
-  typing:
-    executor: python-executor
+  Typing:
+    executor: ubuntu-executor
     parallelism: 4
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - >-
-              typing-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-            - >-
-              typing-poetry-hash-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock.sha256" }}
-      - python/install-packages:
-          pkg-manager: poetry
+      - run:
+          name: Set .env
+          command: cp .env.example .env
+      - run:
+          name: Build image
+          command: docker compose build
       - run:
           name: Run
           command: |
-            set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
-              circleci tests split --split-by=timings)
-            poetry run nox -- -s typeguard -- -v $TEST_FILES
-      - save_cache:
-          paths:
-            - << pipeline.parameters.nox-envs-path >>
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            typing-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
-      - save_cache:
-          paths:
-            - << pipeline.parameters.poetry-hash-path >>
-          key: >-
-            typing-poetry-hash-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock.sha256" }}
+            docker compose run \
+              --env TEST_FILES="$(circleci tests glob "tests/**/test_*.py" | \
+                circleci tests split --split-by=timings)" \
+              app bash -ic \
+                "sudo chown -R vscode:vscode . \
+                  && poetry run nox -- -s typeguard -- $TEST_FILES"
+      - store_test_results:
+          path: test-results
 
 workflows:
   upload-to-codecov:
@@ -234,6 +217,6 @@ workflows:
       - Security:
           context:
             - context
-      - typing:
+      - Typing:
           context:
             - context

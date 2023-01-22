@@ -59,7 +59,14 @@ def tests(session: nox.Session) -> None:
 def typeguard(session: nox.Session) -> None:
     """Runtime type checking using Typeguard."""
     args = session.posargs or ["-m", "not e2e"]
-    session.run("pytest", "--typeguard-packages=src", "-n", "4", *args)
+    session.run(
+        "pytest",
+        "--typeguard-packages=src",
+        "-n",
+        "4",
+        "--junitxml=test-results/junit.xml",
+        *args,
+    )
 
 
 @nox.session(python=False)
