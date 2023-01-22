@@ -190,9 +190,19 @@ jobs:
           command: >-
             set -e
             TEST_FILES=$(circleci tests glob "tests/**/test_*.py" |
-            circleci tests split --split-by=timings) &&
-            echo $TEST_FILES &&
+            circleci tests split --split-by=timings) 
+      - run:
+          name: Run
+          command: >-
+            echo $TEST_FILES
+      - run:
+          name: Run
+          command: >-
             docker compose run --env TEST_FILES=$TEST_FILES app bash -ic
+            "echo $TEST_FILES"  
+      - run:
+          name: Run
+          command: >-
             "echo $TEST_FILES"  
   typing:
     executor: python-executor
