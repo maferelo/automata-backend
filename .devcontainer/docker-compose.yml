@@ -1,19 +1,18 @@
 ---
+version: "3.8"
 services:
   app:
     build:
       args:
-        VARIANT: ${DEV_IMAGE_VARIANT:-3.8-bullseye}
+        IMAGE_VARIANT: ${DEV_CONTAINER_IMAGE_VARIANT:-3.8-bullseye}
+        POETRY_VERSION: ${DEV_CONTAINER_POETRY_VERSION:-1.3.2}
       dockerfile: .devcontainer/Dockerfile
     command: sleep infinity
-    environment:
-      COMPOSE_DOCKER_CLI_BUILD: 1
-      DOCKER_BUILDKIT: 1
     volumes:
+      - .:/app:cache
+      - /app/.venv
       - ~/.bash_history:/home/vscode/.bash_history:cache
       - extensions-cache:/home/vscode/.vscode-server/extensions:cache
-      - home-cache:/home/vscode/.cache:cache
 
 volumes:
-  home-cache:
   extensions-cache:

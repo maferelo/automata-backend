@@ -92,12 +92,6 @@ repos:
           - cython
           - pyi
           - python
-      - entry: poetry run mypy
-        id: mypy
-        language: system
-        name: mypy
-        types:
-          - python
       - entry: poetry run pylint
         id: pylint
         language: system

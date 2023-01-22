@@ -64,7 +64,6 @@
   },
   "dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
   "postCreateCommand": "./.devcontainer/postcreate.sh",
-  "remoteUser": "vscode",
   "service": "app",
   "waitFor": "postCreateCommand",
   "workspaceFolder": "/app"
