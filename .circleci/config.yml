@@ -32,32 +32,28 @@ executors:
       docker_layer_caching: true
 
 jobs:
-  test:
-    executor: python-executor
+  Test:
+    executor: ubuntu-executor
     parallelism: 4
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - >-
-              test-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock" }}
-            - >-
-              test-poetry-hash-cache
-              -v<< pipeline.parameters.cache-version >>
-              -{{ checksum "poetry.lock.sha256" }}
-      - python/install-packages:
-          pkg-manager: poetry
+      - run:
+          name: Set .env
+          command: cp .env.example .env
+      - run:
+          name: Build image
+          command: docker compose build
       - run:
           name: Run
           command: |
-            set -e
-            TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | \
-              circleci tests split --split-by=timings)
-            echo $TEST_FILES
-            poetry run nox -- -s tests -- -m "not e2e" --cov-fail-under=0 \
-              --cov-report xml:coverage.xml $TEST_FILES
+            docker compose run \
+              --env TEST_FILES="$(circleci tests glob "tests/**/test_*.py" | \
+                circleci tests split --split-by=timings)" \
+              app bash -ic \
+                "sudo chown -R vscode:vscode . \
+                  && poetry run nox \
+                    -- -s tests -- -m 'not e2e' --cov-fail-under=0 \
+                    --cov-report xml:coverage.xml $TEST_FILES"
             mkdir -p workspace
             cp .coverage workspace/.coverage.$CIRCLE_NODE_INDEX
       - persist_to_workspace:
@@ -72,21 +68,6 @@ jobs:
             ./codecov --file /home/circleci/project/coverage.xml
       - store_test_results:
           path: test-results
-      - save_cache:
-          paths:
-            - << pipeline.parameters.nox-envs-path >>
-            - << pipeline.parameters.venv-path >>
-          key: >-
-            test-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock" }}
-      - save_cache:
-          paths:
-            - << pipeline.parameters.poetry-hash-path >>
-          key: >-
-            test-poetry-hash-cache
-            -v<< pipeline.parameters.cache-version >>
-            -{{ checksum "poetry.lock.sha256" }}
   coverage:
     executor: python-executor
     steps:
@@ -216,14 +197,14 @@ jobs:
 workflows:
   upload-to-codecov:
     jobs:
-      - test:
+      - Test:
           context:
             - context
       - coverage:
           context:
             - context
           requires:
-            - test
+            - Test
       - Docs:
           context:
             - context

@@ -50,6 +50,8 @@ def tests(session: nox.Session) -> None:
         "4",
         "--cov",
         "src",
+        "-o",
+        "junit_family=xunit1",
         "--junitxml=test-results/junit.xml",
         *args,
     )
