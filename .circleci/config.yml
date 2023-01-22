@@ -194,16 +194,16 @@ jobs:
       - run:
           name: Run
           command: >-
-            echo $TEST_FILES
+            printenv
       - run:
           name: Run
           command: >-
             docker compose run --env TEST_FILES=$TEST_FILES app bash -ic
-            "echo $TEST_FILES"  
+            "printenv"  
       - run:
           name: Run
           command: >-
-            "echo $TEST_FILES"  
+            "printenv"  
   typing:
     executor: python-executor
     parallelism: 4
