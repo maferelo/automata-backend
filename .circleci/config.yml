@@ -106,8 +106,8 @@ jobs:
                 circleci tests split --split-by=timings)" \
               app bash -ic \
                 "sudo chown -R vscode:vscode . \
-                  && poetry run nox -- -s tests -- -m "not e2e" --cov-fail-under=0 \
-              --cov-report xml:coverage.xml $TEST_FILES"
+                  && poetry run nox -- -s tests -- -m 'not e2e' --cov-fail-under=0 \
+                      --cov-report xml:coverage.xml $TEST_FILES"
             mkdir -p workspace
             cp .coverage workspace/.coverage.$CIRCLE_NODE_INDEX
       - persist_to_workspace:
