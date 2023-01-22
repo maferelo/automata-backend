@@ -3,17 +3,8 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@3.2.4
-  python: circleci/python@1.5.0
-
-parameters:
-  image-tag:
-    type: string
-    default: 3.8.16
 
 executors:
-  python-executor:
-    docker:
-      - image: cimg/python:<< pipeline.parameters.image-tag >>
   ubuntu-executor:
     machine:
       image: ubuntu-2204:2022.10.2
