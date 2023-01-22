@@ -64,6 +64,8 @@ def typeguard(session: nox.Session) -> None:
         "--typeguard-packages=src",
         "-n",
         "4",
+        "-o",
+        "junit_family=xunit2",
         "--junitxml=test-results/junit.xml",
         *args,
     )
