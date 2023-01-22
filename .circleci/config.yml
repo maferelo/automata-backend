@@ -187,7 +187,7 @@ jobs:
           command: docker compose build
       - run:
           name: Run
-          command: circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings
+          command: export TEST_FILES=$(circleci tests glob "tests/**/test_*.py" | circleci tests split --split-by=timings)
       - run:
           name: Run
           command: >-
