@@ -19,7 +19,7 @@ services:
       - .:/app:cache
       - /app/.venv
       - ~/.bash_history:/home/vscode/.bash_history:cache
-      - extensions-cache:/home/vscode/.vscode-server/extensions:cache
+      - extensions-cache:/home/vscode/.vscode-server:cache
 
   postgres:
     env_file:

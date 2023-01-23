@@ -26,7 +26,7 @@ USER vscode
 RUN \
     mkdir -p \
     ~/.cache \
-    /home/vscode/.vscode-server/extensions \
+    /home/vscode/.vscode-server \
     ;
 
 RUN \
