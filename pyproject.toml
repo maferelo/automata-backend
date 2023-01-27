@@ -90,7 +90,7 @@ exclude = [".env", ".venv", "apps", "notes", "migrations"]
 ignore_missing_imports = "True"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["src", "tests"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
