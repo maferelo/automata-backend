@@ -5,6 +5,7 @@ from fastapi import Request
 from src.app.db import Books
 from src.app.db import BooksReaders
 from src.app.db import Readers
+from src.app.db import Reminders
 from src.app.db import User
 from src.app.db import database
 
@@ -65,3 +66,17 @@ async def create_books_readers(request: Request):
     data = await request.json()
     books_readers = await BooksReaders.objects.create(**data)
     return {"id": books_readers.id}
+
+
+@app.get("/reminders")
+async def get_reminders():
+    """Return list of reminders."""
+    return await Reminders.objects.all()
+
+
+@app.post("/reminders")
+async def create_reminder(request: Request):
+    """Create a reminder."""
+    data = await request.json()
+    reminder = await Reminders.objects.create(**data)
+    return {"id": reminder.id}

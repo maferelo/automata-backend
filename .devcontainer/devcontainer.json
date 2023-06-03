@@ -57,7 +57,7 @@
           "titleBar.activeBackground": "#FF00FF",
           "titleBar.activeForeground": "#ffffff"
         },
-        "window.title": "${localWorkspaceFolderBasename}",
+        "window.title": "${localWorkspaceFolderBasename}${separator}${activeEditorShort}",
         "yaml.format.enable": true
       }
     }

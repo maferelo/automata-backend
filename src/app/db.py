@@ -1,4 +1,7 @@
 """Database module.""" ""
+import datetime
+from enum import Enum
+
 import databases
 import ormar
 import sqlalchemy
@@ -74,3 +77,32 @@ class BooksReaders(
     id: int = ormar.Integer(primary_key=True)
     book: Books = ormar.ForeignKey(Books, nullable=False, indexed=True)
     reader: Readers = ormar.ForeignKey(Readers, nullable=False, indexed=True)
+
+
+class RemindersEnum(Enum):
+    """Reminders recurrence enum."""
+
+    MINUTES = "minutes"
+    HOURS = "hours"
+    DAYS = "days"
+    MONTHS = "months"
+    YEARS = "years"
+
+
+class Reminders(
+    ormar.Model
+):  # pylint: disable=too-few-public-methods, too-many-ancestors
+    """Reminders model."""
+
+    class Meta(BaseMeta):  # pylint: disable=too-few-public-methods
+        """Reminders class."""
+
+        tablename = "reminders"
+
+    id: int = ormar.Integer(primary_key=True)
+    text: str = ormar.String(max_length=128, nullable=False)
+    interval: int = ormar.Integer(nullable=False, default=1)
+    recurrence: str = ormar.String(max_length=100, choices=list(RemindersEnum))
+    at: datetime.datetime = ormar.DateTime(
+        nullable=False, default=datetime.datetime.now
+    )

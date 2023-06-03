@@ -1,4 +1,4 @@
-# Automata
+# Automata Backend
 
 > Personal scripts for automation of everyday tasks
 > using best practices with reference notes.
@@ -7,6 +7,9 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/maferelo/automata-backend/tree/develop.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/maferelo/automata-backend/tree/main)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/maferelo/automata-backend.git)
+
+If you already have VS Code and Docker installed, you can click the badge above or [here](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/maferelo/automata-backend.git) to get started. Clicking these links will cause VS Code to automatically install the Dev Containers extension if needed, clone the source code into a container volume, and spin up a dev container for use.
 
 ## Prerequisites
 
@@ -95,7 +98,7 @@ heroku buildpacks:add -a automata-backend \
   https://github.com/moneymeets/python-poetry-buildpack.git
 heroku buildpacks:add -a automata-backend heroku/python
 heroku config:set POETRY_VERSION=1.3.1
-heroku addons:create heroku-postgresql:mini
+heroku addons:create heroku-postgresql:mini --version=12 --app automata-backend
 ```
 
 ```bash
