@@ -2,7 +2,6 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "2gua.rainbow-brackets",
         "74th.monokai-charcoal-high-contrast",
         "almenon.arepl",
         "anseki.vscode-color",
