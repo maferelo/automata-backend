@@ -33,6 +33,7 @@ scikit-learn = "0.24.2"
 sqlalchemy = "1.4.41"
 typer = "0.6.1"
 uvicorn = "0.18.3"
+tensorflow = {url = "https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow-2.12.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"}
 
 [tool.poetry.group.dev.dependencies]
 bandit = "1.7.4"
@@ -67,7 +68,7 @@ xdoctest = "1.1.0"
 yamllint = "1.28.0"
 
 [tool.poetry.scripts]
-wiki = "src.app.console:main"
+wiki = "app.console:main"
 
 
 [tool.coverage.paths]

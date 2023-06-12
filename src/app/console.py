@@ -3,6 +3,8 @@ import textwrap
 
 import click
 
+from trading import pipeline
+
 from . import __version__
 from . import wikipedia
 
@@ -23,3 +25,7 @@ def main(language: str) -> None:
 
     click.secho(page.title, fg="green")
     click.echo(textwrap.fill(page.extract))
+
+    click.secho("Pipeline run", fg="red")
+    data = pipeline.run()
+    click.echo(data.head())
