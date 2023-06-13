@@ -13,6 +13,10 @@ If you already have VS Code and Docker installed, you can click the badge above 
 
 ## Prerequisites
 
+- [Docker](https://www.docker.com/)
+- [Pyenv](https://github.com/pyenv/pyenv)
+- [Poetry](https://python-poetry.org/)
+
 Clone repository
 
 ```bash
@@ -22,7 +26,6 @@ cd automata
 
 ### For Mac
 
-- [Docker](https://www.docker.com/)
 - [Homebrew](https://brew.sh/)
 
 ```bash
@@ -30,12 +33,6 @@ bash scripts/prestart-mac.sh
 ```
 
 ## Development
-
-We use [remote containers](https://code.visualstudio.com/docs/remote/containers-tutorial).
-
-1. Press F1 to open the Command Palette.
-2. Type reopen in container.
-3. Select Remote Containers: Reopen in Container from the list of available options.
 
 Inside the container run:
 
@@ -50,9 +47,10 @@ run
 curl --location --request GET 'http://localhost:8000/'
 ```
 
-### Linting
+### Continuous integration
 
 ```bash
+pre-commit install
 pre-commit run --all-files
 ```
 
