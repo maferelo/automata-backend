@@ -26,6 +26,10 @@ jobs:
     executor: python
     steps:
       - checkout
+      - restore_cache:
+          name: Restore Poetry cache
+          keys:
+            - poetry-{{ checksum "poetry.lock" }}
       - run:
           name: Set .env
           command: cp .env.example .env
@@ -38,6 +42,11 @@ jobs:
           root: ~/workdir
           paths:
             - ./*
+      - save_cache:
+          name: Save Poetry cache
+          key: poetry-{{ checksum "poetry.lock" }}
+          paths:
+            - .venv
   Nox:
     executor: python
     steps:
