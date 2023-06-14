@@ -55,6 +55,14 @@ jobs:
       - run:
           name: Run Nox
           command: poetry run nox
+  pre-commit:
+    executor: python
+    steps:
+      - attach_workspace:
+          at: ~/workdir
+      - run:
+          name: Run pre-commit
+          command: poetry run pre-commit run --all-files
 
 
   Test:
@@ -192,6 +200,11 @@ workflows:
           context:
             - context
       - Nox:
+          context:
+            - context
+          requires:
+            - Setup
+      - pre-commit:
           context:
             - context
           requires:
