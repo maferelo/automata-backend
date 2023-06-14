@@ -31,7 +31,9 @@ jobs:
           command: cp .env.example .env
       - run:
           name: Install dependencies
-          command: poetry install --no-ansi
+          command: |
+            poetry config virtualenvs.in-project true
+            poetry install --no-ansi
       - persist_to_workspace:
           root: ~/workdir
           paths:
