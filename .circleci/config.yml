@@ -16,8 +16,26 @@ executors:
     machine:
       image: ubuntu-2204:2022.10.2
       docker_layer_caching: true
+  python:
+    docker:
+      - image: cimg/python:3.9.7
 
 jobs:
+  Testv2:
+    executor: python
+    parallelism: 4
+    steps:
+      - checkout
+      - run:
+          name: Set .env
+          command: cp .env.example .env
+      - run:
+          name: Install dependencies
+          command: poetry install
+      - run:
+          name: Run
+          command: poetry run nox
+
   Test:
     executor: ubuntu-executor
     parallelism: 4
@@ -163,9 +181,12 @@ jobs:
           path: test-results
 
 workflows:
-  upload-to-codecov:
+  main:
     jobs:
       - Test:
+          context:
+            - context
+      - Testv2:
           context:
             - context
       - Coverage:

@@ -17,7 +17,7 @@ If you already have VS Code and Docker installed, you can click the badge above 
 - [Pyenv](https://github.com/pyenv/pyenv)
 - [Poetry](https://python-poetry.org/)
 
-Clone repository
+### Clone repository
 
 ```bash
 git clone https://github.com/maferelo/automata.git
@@ -32,9 +32,13 @@ cd automata
 bash scripts/prestart-mac.sh
 ```
 
-## Development
+### Install dependencies
 
-Inside the container run:
+```bash
+poetry install
+```
+
+## Development
 
 ```bash
 poetry run wiki

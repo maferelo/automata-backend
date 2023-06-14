@@ -8,6 +8,6 @@ code --install-extension ms-vscode-remote.remote-containers
 brew install pyenv
 
 curl -sSL https://install.python-poetry.org | python3 -
-export PATH="$HOME/.local/bin:$PATH" >> ~/.zshrc
+echo "export PATH='$HOME/.local/bin:$PATH'" >> ~/.zshrc
 
 code .
