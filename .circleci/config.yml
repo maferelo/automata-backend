@@ -19,7 +19,7 @@ executors:
   python:
     docker:
       - image: cimg/python:3.8.16
-    working_directory: /tmp/workspace
+    working_directory: /workspace
 
 jobs:
   Setup:
@@ -33,9 +33,9 @@ jobs:
           name: Install dependencies
           command: poetry install --no-ansi
       - persist_to_workspace:
-          root: /
+          root: .
           paths:
-            - /tmp/workspace
+            - ./*
   Nox:
     executor: python
     steps:
