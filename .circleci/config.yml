@@ -188,26 +188,6 @@ jobs:
 workflows:
   main:
     jobs:
-      - Test:
-          context:
-            - context
-      - Coverage:
-          context:
-            - context
-          requires:
-            - Test
-      - Docs:
-          context:
-            - context
-      - Lint:
-          context:
-            - context
-      - Mypy:
-          context:
-            - context
-      - Typeguard:
-          context:
-            - context
       - Setup:
           context:
             - context
