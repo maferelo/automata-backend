@@ -28,7 +28,7 @@ jobs:
       - run: mkdir -p workspace && cd workspace
       - checkout:
           path: /tmp/workspace
-      - run: pwd && ls -la
+      - run: pwd && ls -la && cd /tmp/workspace && pwd && ls -la
       - run:
           name: Set .env
           command: cp .env.example .env
