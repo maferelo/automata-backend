@@ -19,22 +19,19 @@ executors:
   python:
     docker:
       - image: cimg/python:3.8.16
-    working_directory: /tmp
+    working_directory: /tmp/workspace
 
 jobs:
   Setup:
     executor: python
     steps:
-      - run: mkdir -p workspace && cd workspace
-      - checkout:
-          path: /tmp/workspace
-      - run: pwd && ls -la && cd /tmp/workspace && pwd && ls -la
+      - checkout
       - run:
           name: Set .env
-          command: cp /tmp/workspace.env.example /tmp/workspace.env
+          command: cp .env.example .env
       - run:
           name: Install dependencies
-          command: cd /tmp/workspace && poetry install --no-ansi
+          command: poetry install --no-ansi
       - persist_to_workspace:
           root: tmp
           paths:
