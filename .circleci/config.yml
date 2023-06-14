@@ -177,9 +177,6 @@ workflows:
       - Test:
           context:
             - context
-      - Testv2:
-          context:
-            - context
       - Coverage:
           context:
             - context
