@@ -33,9 +33,9 @@ jobs:
           name: Install dependencies
           command: poetry install --no-ansi
       - persist_to_workspace:
-          root: .
+          root: /
           paths:
-            - "*"
+            - /tmp/workspace
   Nox:
     executor: python
     steps:
