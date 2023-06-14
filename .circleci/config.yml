@@ -19,7 +19,7 @@ executors:
   python:
     docker:
       - image: cimg/python:3.8.16
-    working_directory: /workspace
+    working_directory: /tmp
 
 jobs:
   Setup:
