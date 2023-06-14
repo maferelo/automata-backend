@@ -40,6 +40,8 @@ jobs:
   Nox:
     executor: python
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
           name: Run Nox
           command: poetry run nox
