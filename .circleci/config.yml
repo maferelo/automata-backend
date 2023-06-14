@@ -26,7 +26,7 @@ jobs:
     executor: python
     steps:
       - checkout
-      - run: mkdir -p workspace
+      - run: mkdir -p workspace && cd workspace
       - run:
           name: Set .env
           command: cp .env.example .env
