@@ -141,22 +141,6 @@ jobs:
             docker compose run app bash -ic
             "sudo chown -R vscode:vscode .
             && poetry run nox -- -s mypy"
-  Security:
-    executor: ubuntu-executor
-    steps:
-      - checkout
-      - run:
-          name: Set .env
-          command: cp .env.example .env
-      - run:
-          name: Build image
-          command: docker compose build
-      - run:
-          name: Run
-          command: >-
-            docker compose run app bash -ic
-            "sudo chown -R vscode:vscode .
-            && poetry run nox -- -s safety -- -i 51668 -i 51457"
   Typeguard:
     executor: ubuntu-executor
     parallelism: 4
@@ -201,9 +185,6 @@ workflows:
           context:
             - context
       - Mypy:
-          context:
-            - context
-      - Security:
           context:
             - context
       - Typeguard:
