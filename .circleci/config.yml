@@ -40,7 +40,7 @@ jobs:
     executor: python
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/workdir
       - run:
           name: Run Nox
           command: poetry run nox
