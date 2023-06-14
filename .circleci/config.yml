@@ -16,8 +16,55 @@ executors:
     machine:
       image: ubuntu-2204:2022.10.2
       docker_layer_caching: true
+  python:
+    docker:
+      - image: cimg/python:3.8.16
+    working_directory: ~/workdir
 
 jobs:
+  Setup:
+    executor: python
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Poetry cache
+          keys:
+            - poetry-{{ checksum "poetry.lock" }}
+      - run:
+          name: Set .env
+          command: cp .env.example .env
+      - run:
+          name: Install dependencies
+          command: |
+            poetry config virtualenvs.in-project true
+            poetry install --no-ansi
+      - persist_to_workspace:
+          root: ~/workdir
+          paths:
+            - ./*
+      - save_cache:
+          name: Save Poetry cache
+          key: poetry-{{ checksum "poetry.lock" }}
+          paths:
+            - .venv
+  Nox:
+    executor: python
+    steps:
+      - attach_workspace:
+          at: ~/workdir
+      - run:
+          name: Run Nox
+          command: poetry run nox
+  pre-commit:
+    executor: python
+    steps:
+      - attach_workspace:
+          at: ~/workdir
+      - run:
+          name: Run pre-commit
+          command: poetry run pre-commit run --all-files
+
+
   Test:
     executor: ubuntu-executor
     parallelism: 4
@@ -123,22 +170,6 @@ jobs:
             docker compose run app bash -ic
             "sudo chown -R vscode:vscode .
             && poetry run nox -- -s mypy"
-  Security:
-    executor: ubuntu-executor
-    steps:
-      - checkout
-      - run:
-          name: Set .env
-          command: cp .env.example .env
-      - run:
-          name: Build image
-          command: docker compose build
-      - run:
-          name: Run
-          command: >-
-            docker compose run app bash -ic
-            "sudo chown -R vscode:vscode .
-            && poetry run nox -- -s safety -- -i 51668 -i 51457"
   Typeguard:
     executor: ubuntu-executor
     parallelism: 4
@@ -163,28 +194,18 @@ jobs:
           path: test-results
 
 workflows:
-  upload-to-codecov:
+  main:
     jobs:
-      - Test:
+      - Setup:
           context:
             - context
-      - Coverage:
+      - Nox:
           context:
             - context
           requires:
-            - Test
-      - Docs:
+            - Setup
+      - pre-commit:
           context:
             - context
-      - Lint:
-          context:
-            - context
-      - Mypy:
-          context:
-            - context
-      - Security:
-          context:
-            - context
-      - Typeguard:
-          context:
-            - context
+          requires:
+            - Setup

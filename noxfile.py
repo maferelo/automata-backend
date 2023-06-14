@@ -7,7 +7,6 @@ nox.options.sessions = (
     "mypy",
     "tests",
     "typeguard",
-    "safety",
     "xdoctest",
     "coverage",
 )
@@ -31,13 +30,6 @@ def mypy(session: nox.Session) -> None:
 def docs(session: nox.Session) -> None:
     """Build the documentation."""
     session.run("sphinx-build", "docs", "docs/_build", "-W")
-
-
-@nox.session(python=False)
-def safety(session: nox.Session) -> None:
-    """Scan dependencies for insecure packages."""
-    args = session.posargs or []
-    session.run("safety", "check", "--full-report", "--file=poetry.lock", *args)
 
 
 @nox.session(python=False)

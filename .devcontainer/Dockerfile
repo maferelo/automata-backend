@@ -39,7 +39,6 @@ WORKDIR /app
 
 COPY \
     poetry.lock \
-    poetry.toml \
     pyproject.toml \
     ./
 
