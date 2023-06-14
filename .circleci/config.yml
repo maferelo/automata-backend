@@ -21,9 +21,8 @@ executors:
       - image: cimg/python:3.8.16
 
 jobs:
-  Testv2:
+  Setup:
     executor: python
-    parallelism: 4
     steps:
       - checkout
       - run:
@@ -32,9 +31,17 @@ jobs:
       - run:
           name: Install dependencies
           command: poetry install --no-ansi
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ""
+  Nox:
+    executor: python
+    steps:
       - run:
-          name: Run
+          name: Run Nox
           command: poetry run nox
+
 
   Test:
     executor: ubuntu-executor
@@ -190,3 +197,11 @@ workflows:
       - Typeguard:
           context:
             - context
+      - Setup:
+          context:
+            - context
+      - Nox:
+          context:
+            - context
+          requires:
+            - Setup
