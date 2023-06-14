@@ -31,7 +31,7 @@ jobs:
           command: cp .env.example .env
       - run:
           name: Install dependencies
-          command: poetry install
+          command: poetry install --no-ansi
       - run:
           name: Run
           command: poetry run nox
