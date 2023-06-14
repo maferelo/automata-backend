@@ -27,7 +27,7 @@ jobs:
     steps:
       - run: mkdir -p workspace && cd workspace
       - checkout:
-          path: workspace
+          path: /tmp/workspace
       - run:
           name: Set .env
           command: cp .env.example .env
