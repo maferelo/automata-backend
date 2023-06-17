@@ -7,7 +7,6 @@
   "editor.rulers": [88],
   "markdownlint.ignore": ["LICENSE"],
   "pylint.importStrategy": "fromEnvironment",
-  "pylint.path": ["${workspaceFolder}/.venv/bin/pylint"],
   "python.analysis.diagnosticSeverityOverrides": {
     "reportGeneralTypeIssues": "none"
   },
@@ -21,5 +20,6 @@
     "titleBar.activeForeground": "#ffffff"
   },
   "window.title": "${localWorkspaceFolderBasename}${separator}${activeEditorShort}",
-  "yaml.format.enable": true
+  "yaml.format.enable": true,
+  "mypy.runUsingActiveInterpreter": true
 }
