@@ -6,7 +6,6 @@ __pycache__/
 .nox/
 .pytest_cache/
 .venv/
-.vscode/
 *.csv
 *.sha256
 coverage.xml
